@@ -1009,9 +1009,7 @@ function submitAuditForm(e) {
     fetch('https://script.google.com/macros/s/AKfycbyuWTgY13IwxJSct1U7oqo8DW1W6WnNpvNgaOix8g_G-7toEya-Kd_tS-XrFkZjT23YZQ/exec', {
         method: 'POST',
         mode: 'no-cors',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'text/plain; charset=utf-8' },
         body: JSON.stringify(payload)
     })
     .then(() => {
