@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<link rel="icon" type="image/png" href="favicon.png">
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VELUSE | Precision Revenue Architecture</title>
+<meta content="We engineer revenue through a high-performance algorithmic approach to growth." name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@700;800;900&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Space+Grotesk:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'void-black': '#050508',
+            'graphite': '#16161F',
+            'neon-indigo': '#4F46E5',
+            'status-cyan': '#06B6D4',
+          },
+          fontFamily: {
+            sans: ['Inter Tight', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          letterSpacing: {
+            tightest: '-0.015em',
+          },
+        }
+      }
+    }
+  </script>
+<style data-purpose="global-styles">
+    :root {
+      --mouse-x: 50%;
+      --mouse-y: 50%;
+    }
+    body {
+      background-color: #050508;
+      color: #FFFFFF;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Inter Tight', sans-serif;
+      letter-spacing: -0.015em;
+      word-spacing: 0.12em;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .font-space {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* Fluid Typography */
+    h1 { font-size: clamp(3.5rem, 12vw, 9rem); }
+    h2 { font-size: clamp(2rem, 8vw, 4.5rem); }
+
+    .responsive-pad {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    @media (min-width: 768px) {
+      .responsive-pad {
+        padding-left: 3rem;
+        padding-right: 3rem;
+      }
+    }
+    
+    #background-matrix {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -2;
+      opacity: 0.2;
+    }
+
+    .grid-module {
+      border: 1px solid #16161F;
+      position: relative;
+      background: transparent;
+      transition: border-color 0.2s ease-out;
+      overflow: hidden;
+    }
+    .grid-module::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(79, 70, 229, 0.15), transparent 100px);
+      opacity: 0;
+      transition: opacity 0.2s ease-out;
+      pointer-events: none;
+    }
+    .grid-module:hover::before {
+      opacity: 1;
+    }
+    .grid-module:hover {
+      border-color: #4F46E5;
+      z-index: 10;
+    }
+
+    .primary-btn {
+      background: #FFFFFF;
+      color: #000000;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .pipeline-audit-btn:hover {
+      background: #050508 !important;
+      color: #FFFFFF !important;
+      border-color: #4F46E5 !important;
+      box-shadow: 0 0 0 1px #4F46E5, 0 0 15px rgba(79, 70, 229, 0.5);
+    }
+
+    .secondary-btn {
+      border: 1px solid #16161F;
+      color: #FFFFFF;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      transition: all 0.2s ease-out;
+    }
+    .secondary-btn:hover {
+      border-color: #4F46E5;
+      background: rgba(79, 70, 229, 0.05);
+    }
+
+    .entrance-anim {
+      opacity: 0;
+      transform: translateY(20px);
+      will-change: transform, opacity;
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .entrance-anim.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .stagger-1 { transition-delay: 0.1s; }
+    .stagger-2 { transition-delay: 0.2s; }
+    .stagger-3 { transition-delay: 0.3s; }
+    .stagger-4 { transition-delay: 0.4s; }
+    
+    .section-grid {
+      display: grid;
+      border-top: 1px solid #16161F;
+      position: relative;
+      z-index: 1;
+    }
+    .metrics-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      text-align: left;
+    }
+
+    #main-nav {
+      transition: background 0.3s ease-in-out, backdrop-filter 0.3s ease-in-out, border-color 0.3s ease-in-out;
+    }
+    #main-nav.scrolled {
+      background: rgba(5, 5, 8, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid #16161F;
+    }
+
+    @keyframes drift {
+      from { transform: translateY(0) translateX(0); opacity: 0; }
+      10% { opacity: 0.5; }
+      90% { opacity: 0.5; }
+      to { transform: translateY(-100px) translateX(20px); opacity: 0; }
+    }
+    .tracer {
+      animation: drift 20s linear infinite;
+    }
+
+    /* Custom Scrollbar for Legal Panels */
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #050508;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #16161F;
+      border-radius: 0px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #4F46E5;
+    }
+  </style>
+</head>
+<body class="antialiased bg-void-black text-white font-mono text-[13px]">
+<div style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; overflow: hidden; background: #050508;">
+<div id="veluse-telemetry" style="position: absolute; bottom: 24px; right: 24px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #06B6D4; opacity: 0.35; line-height: 1.6; text-align: right; letter-spacing: 0.05em; z-index: 10;">
+        SYS_NODE // VELUSE_CORE_ACTIVE<br/>
+        CURS_COORD_X: <span id="tele-x">0000</span> px<br/>
+        CURS_COORD_Y: <span id="tele-y">0000</span> px<br/>
+        MATRIX_VELOCITY: <span id="tele-v">0.00</span> nodes/s
+    </div>
+<canvas id="telemetryCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block;"></canvas>
+</div>
+<!-- BEGIN: Navigation -->
+<nav class="fixed top-0 left-0 w-full z-[9999] bg-transparent border-b border-transparent px-6 md:px-10 py-4 flex justify-between items-center h-24" id="main-nav">
+<div class="flex items-center gap-4">
+    <span class="text-3xl font-space font-extrabold text-white tracking-[-0.05em] uppercase">VELUSE</span>
+</div>
+<div class="hidden xl:flex items-center gap-8 text-[13px] font-mono uppercase tracking-[0.05em]">
+<a class="text-white/70 hover:text-white transition-colors nav-link" href="#overview">OVERVIEW</a>
+<a class="text-white/70 hover:text-white transition-colors nav-link" href="#protocol">GROWTH PROTOCOL</a>
+<a class="text-white/70 hover:text-white transition-colors nav-link" href="#architecture">ACQUISITION ARCHITECTURE</a>
+<a class="text-white/70 hover:text-white transition-colors nav-link" href="#infrastructure">OFFER INFRASTRUCTURE</a>
+<a class="text-white/70 hover:text-white transition-colors nav-link" href="#automation">AUTOMATION</a>
+<a class="text-white/70 hover:text-white transition-colors nav-link" href="#os">VELUSE OS</a>
+<a class="text-white/70 hover:text-white transition-colors nav-link" href="#roadmap">ROADMAP</a>
+</div>
+<button class="bg-white text-black px-6 py-2.5 font-mono text-[13px] font-bold uppercase tracking-tight hover:bg-neon-indigo hover:text-white transition-all cta-trigger">
+    DEPLOY SYSTEM
+  </button>
+</nav>
+<!-- END: Navigation -->
+<!-- 1. #overview: Hero / Precision Engineering section -->
+<header class="min-h-screen flex flex-col justify-center border-b border-graphite responsive-pad pt-32 relative" id="overview">
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(79,70,229,0.08),transparent_70%)]"></div>
+<div class="z-10 max-w-7xl">
+<div class="entrance-anim inline-block border-l-2 border-neon-indigo pl-4 mb-8">
+<span class="font-mono text-neon-indigo text-[13px] uppercase tracking-[0.4em]">Precision Engineering</span>
+</div>
+<h1 class="entrance-anim stagger-1 font-sans font-black text-white leading-[1.0] md:leading-[0.95] tracking-tightest mb-8 text-[32px] sm:text-[48px] md:text-[64px] lg:text-[80px] xl:text-[84px] xl:max-w-6xl">
+      WE DON'T RUN CAMPAIGNS.<br/>
+<span class="text-transparent" style="-webkit-text-stroke: 1.5px #4F46E5; -webkit-text-fill-color: transparent;">WE ENGINEER</span> REVENUE.
+    </h1>
+<p class="entrance-anim stagger-2 max-w-3xl text-white/60 text-[13px] sm:text-[14px] md:text-[15px] leading-relaxed mb-12 font-mono">
+      A high-performance algorithmic approach to growth. We replace volatile marketing with predictable, data-driven systems that dominate your local market.
+    </p>
+<div class="entrance-anim stagger-3 flex flex-col sm:flex-row gap-4">
+<button class="primary-btn pipeline-audit-btn cta-trigger px-12 py-6 uppercase font-bold tracking-wider">Book A Strategy Call</button>
+<button class="secondary-btn px-12 py-6 font-mono uppercase font-bold tracking-wider" onclick="document.getElementById('protocol').scrollIntoView({behavior: 'smooth'})">View Protocol</button>
+</div>
+</div>
+<div class="absolute bottom-8 left-12 flex items-center gap-4 font-mono text-[10px] text-white/20 uppercase tracking-[0.3em]">
+<span class="">Scroll to deploy</span>
+<div class="h-px w-24 bg-graphite"></div>
+</div>
+</header>
+<!-- 2. #protocol: Growth Protocol section (Heritage grid layout) -->
+<section class="relative border-b border-graphite overflow-hidden" id="protocol">
+<div class="absolute left-1/2 top-0 bottom-0 w-[1px] bg-neon-indigo/20 -translate-x-1/2 hidden md:block"></div>
+<div class="p-6 md:p-12 border-b border-graphite flex justify-between items-end entrance-anim relative z-10">
+<div>
+<span class="font-mono text-neon-indigo text-[13px] uppercase tracking-[0.2em] block mb-4">Growth Protocol</span>
+<h2 class="text-4xl md:text-5xl font-black">5-PHASE STACK</h2>
+<p class="text-white/40 mt-6 max-w-md font-mono text-[13px] uppercase tracking-wider leading-[1.5]">Sequential acceleration for high-ticket acquisition.</p>
+</div>
+<div class="text-[120px] font-black text-white/5 leading-none select-none">00</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-0 relative">
+<div class="grid-module p-6 md:p-12 xl:p-16 entrance-anim border-r border-b border-graphite relative">
+<div class="absolute top-1/2 -right-1 w-2 h-2 rounded-full bg-neon-indigo shadow-[0_0_10px_#4F46E5] z-20 hidden md:block"></div>
+<div class="absolute inset-0 flex items-center justify-start p-12 pointer-events-none">
+<span class="text-[180px] font-black text-white/[0.03] leading-none">01</span>
+</div>
+<div class="relative z-10">
+<span class="text-neon-indigo font-mono text-[13px] font-bold block mb-8">01 / FOUNDATION</span>
+<h3 class="text-3xl font-black mb-6 uppercase">System architecture</h3>
+<p class="text-white/40 metrics-text max-w-md">System architecture and pixel-perfect tracking installation. We align your tech stack for 100% attribution.</p>
+</div>
+</div>
+<div class="hidden md:block"></div>
+<div class="hidden md:block"></div>
+<div class="grid-module p-6 md:p-12 xl:p-16 entrance-anim border-l border-b border-graphite stagger-1 relative">
+<div class="absolute top-1/2 -left-1 w-2 h-2 rounded-full bg-status-cyan shadow-[0_0_10px_#06B6D4] z-20 hidden md:block"></div>
+<div class="absolute inset-0 flex items-center justify-end p-12 pointer-events-none">
+<span class="text-[180px] font-black text-white/[0.03] leading-none">02</span>
+</div>
+<div class="relative z-10">
+<span class="text-neon-indigo font-mono text-[13px] font-bold block mb-8">02 / AWARENESS</span>
+<h3 class="text-3xl font-black mb-6 uppercase">Awareness</h3>
+<p class="text-white/40 metrics-text max-w-md">Dominating the digital landscape through omni-channel saturation and strategic brand positioning.</p>
+</div>
+</div>
+<div class="grid-module p-6 md:p-12 xl:p-16 entrance-anim border-r border-b border-graphite stagger-2 relative">
+<div class="absolute top-1/2 -right-1 w-2 h-2 rounded-full bg-neon-indigo shadow-[0_0_10px_#4F46E5] z-20 hidden md:block"></div>
+<div class="absolute inset-0 flex items-center justify-start p-12 pointer-events-none">
+<span class="text-[180px] font-black text-white/[0.03] leading-none">03</span>
+</div>
+<div class="relative z-10">
+<span class="text-neon-indigo font-mono text-[13px] font-bold block mb-8">03 / LEAD GEN</span>
+<h3 class="text-3xl font-black mb-6 uppercase">Lead Gen</h3>
+<p class="text-white/40 metrics-text max-w-md">High-intent traffic conversion through performance-optimized landing environments and psychological triggers.</p>
+</div>
+</div>
+<div class="hidden md:block"></div>
+<div class="hidden md:block"></div>
+<div class="grid-module p-6 md:p-12 xl:p-16 entrance-anim border-l border-b border-graphite stagger-3 relative">
+<div class="absolute top-1/2 -left-1 w-2 h-2 rounded-full bg-status-cyan shadow-[0_0_10px_#06B6D4] z-20 hidden md:block"></div>
+<div class="absolute inset-0 flex items-center justify-end p-12 pointer-events-none">
+<span class="text-[180px] font-black text-white/[0.03] leading-none">04</span>
+</div>
+<div class="relative z-10">
+<span class="text-neon-indigo font-mono text-[13px] font-bold block mb-8">04 / NURTURING</span>
+<h3 class="text-3xl font-black mb-6 uppercase">Nurturing</h3>
+<p class="text-white/40 metrics-text max-w-md">Automated logic flows that qualify leads 24/7, ensuring only high-ticket prospects reach your calendar.</p>
+</div>
+</div>
+<div class="grid-module p-6 md:p-12 xl:p-16 md:col-span-2 entrance-anim stagger-4 relative border-b border-graphite">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-neon-indigo shadow-[0_0_10px_#4F46E5] z-20 hidden md:block"></div>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<span class="text-[220px] font-black text-white/[0.02] leading-none">05</span>
+</div>
+<div class="max-w-2xl mx-auto text-center relative z-10 py-12">
+<span class="text-neon-indigo font-mono text-[13px] font-bold block mb-8">05 / SCALING</span>
+<h3 class="text-4xl font-black mb-6 uppercase">Scaling</h3>
+<p class="text-white/40 metrics-text">Algorithm refinement and budget expansion to compound ROI without breaking the operational framework.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. #architecture: The Acquisition Architecture section (Heritage grid layout) -->
+<section class="section-grid grid-cols-1 border-b border-graphite relative overflow-hidden" id="architecture">
+<div class="p-6 md:p-12 border-b border-graphite text-center entrance-anim relative z-10">
+<h2 class="text-2xl font-black tracking-tightest">THE ACQUISITION ARCHITECTURE</h2>
+<div class="mt-4 w-16 h-1 bg-neon-indigo mx-auto"></div>
+</div>
+<div class="relative">
+<div class="absolute top-1/2 left-0 right-0 h-[1px] bg-neon-indigo/20 -translate-y-1/2 hidden md:block"></div>
+<div class="grid grid-cols-1 md:grid-cols-4">
+<div class="grid-module p-6 md:p-10 entrance-anim border-r border-graphite relative">
+<div class="absolute top-1/2 -right-1 w-2.5 h-2.5 rounded-full bg-neon-indigo shadow-[0_0_10px_#4F46E5] z-20 hidden md:block -translate-y-1/2"></div>
+<div class="font-mono text-status-cyan mb-10 text-[10px] tracking-widest uppercase">[ 01 TRAFFIC INJECTION ]</div>
+<h3 class="text-sm font-black mb-6 uppercase text-left">Traffic Injection</h3>
+<p class="text-white/40 metrics-text text-left font-mono text-[13px]">We deploy highly targeted Meta &amp; Google campaigns to capture intent-driven local traffic.</p>
+</div>
+<div class="grid-module p-6 md:p-10 entrance-anim border-r border-graphite stagger-1 relative">
+<div class="absolute top-1/2 -right-1 w-2.5 h-2.5 rounded-full bg-status-cyan shadow-[0_0_10px_#06B6D4] z-20 hidden md:block -translate-y-1/2"></div>
+<div class="font-mono text-status-cyan mb-10 text-[10px] tracking-widest uppercase">[ 02 CENTRALIZED CAPTURE ]</div>
+<h3 class="text-sm font-black mb-6 uppercase text-left">Centralized Capture</h3>
+<p class="text-white/40 metrics-text text-left font-mono text-[13px]">All leads from ads, website, calls, and walk-ins are pulled into a single dashboard. No more scattered data.</p>
+</div>
+<div class="grid-module p-6 md:p-10 entrance-anim border-r border-graphite stagger-2 relative">
+<div class="absolute top-1/2 -right-1 w-2.5 h-2.5 rounded-full bg-neon-indigo shadow-[0_0_10px_#4F46E5] z-20 hidden md:block -translate-y-1/2"></div>
+<div class="font-mono text-status-cyan mb-10 text-[10px] tracking-widest uppercase">[ 03 ALGORITHMIC QUALIFICATION ]</div>
+<h3 class="text-sm font-black mb-6 uppercase text-left">Algorithmic Qualification</h3>
+<p class="text-white/40 metrics-text text-left font-mono text-[13px]">Every inquiry is auto-checked for budget, location, and purchase timeline. Only serious buyers get passed to the sales team.</p>
+</div>
+<div class="grid-module p-6 md:p-10 entrance-anim stagger-3 relative">
+<div class="font-mono text-status-cyan mb-10 text-[10px] tracking-widest uppercase">[ 04 AUTOMATED NURTURING ]</div>
+<h3 class="text-sm font-black mb-6 uppercase text-left">Automated Nurturing</h3>
+<p class="text-white/40 metrics-text text-left font-mono text-[13px]">Automated follow-ups through WhatsApp, SMS, and email keep prospects engaged until they're ready to book.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. #infrastructure: Funnel Automation / Offer Infrastructure section -->
+<section class="section-grid grid-cols-1 md:grid-cols-3 border-b border-graphite" id="infrastructure">
+<div class="md:col-span-3 p-6 md:p-12 border-b border-graphite entrance-anim">
+<h2 class="text-4xl md:text-5xl font-black">OFFER INFRASTRUCTURE</h2>
+</div>
+<div class="grid-module p-6 md:p-12 entrance-anim border-r border-graphite">
+<div class="text-neon-indigo mb-10">
+<span class="material-symbols-outlined text-4xl">hub</span>
+</div>
+<h4 class="text-2xl font-black mb-4">CAPTURE</h4>
+<p class="text-white/50 metrics-text mb-8">Multi-variant entry points designed to strip away low-intent browsing and identify true buyers.</p>
+<div class="space-y-4 border-t border-graphite pt-8">
+<div class="flex items-center gap-3 text-[10px] font-mono uppercase tracking-widest text-status-cyan">
+<span class="material-symbols-outlined text-xs">done</span> Smart Data Scraping
+      </div>
+<div class="flex items-center gap-3 text-[10px] font-mono uppercase tracking-widest text-status-cyan">
+<span class="material-symbols-outlined text-xs">done</span> API Lead Injection
+      </div>
+<div class="flex items-center gap-3 text-[10px] font-mono uppercase tracking-widest text-status-cyan">
+<span class="material-symbols-outlined text-xs">done</span> Form Intent Scoring
+      </div>
+</div>
+</div>
+<div class="grid-module p-6 md:p-12 entrance-anim border-r border-graphite stagger-1">
+<div class="text-neon-indigo mb-10">
+<span class="material-symbols-outlined text-4xl">filter_alt</span>
+</div>
+<h4 class="text-2xl font-black mb-4">QUALIFY</h4>
+<p class="text-white/50 metrics-text mb-8">Dynamic logic hurdles that ensure zero manual energy is wasted on unqualified prospects.</p>
+<div class="space-y-4 border-t border-graphite pt-8">
+<div class="flex items-center gap-3 text-[10px] font-mono uppercase tracking-widest text-status-cyan">
+<span class="material-symbols-outlined text-xs">done</span> Financial Health Checks
+      </div>
+<div class="flex items-center gap-3 text-[10px] font-mono uppercase tracking-widest text-status-cyan">
+<span class="material-symbols-outlined text-xs">done</span> Conditional Branching
+      </div>
+<div class="flex items-center gap-3 text-[10px] font-mono uppercase tracking-widest text-status-cyan">
+<span class="material-symbols-outlined text-xs">done</span> Instant VSL Triggers
+      </div>
+</div>
+</div>
+<div class="grid-module p-6 md:p-12 entrance-anim stagger-2">
+<div class="text-neon-indigo mb-10">
+<span class="material-symbols-outlined text-4xl">auto_awesome</span>
+</div>
+<h4 class="text-2xl font-black mb-4">NURTURE</h4>
+<p class="text-white/50 metrics-text mb-8">Automated follow-up engines that maintain temperature until the moment of transaction.</p>
+<div class="space-y-4 border-t border-graphite pt-8">
+<div class="flex items-center gap-3 text-[10px] font-mono uppercase tracking-widest text-status-cyan">
+<span class="material-symbols-outlined text-xs">done</span> AI SMS Agents
+      </div>
+<div class="flex items-center gap-3 text-[10px] font-mono uppercase tracking-widest text-status-cyan">
+<span class="material-symbols-outlined text-xs">done</span> Retargeting Sequences
+      </div>
+<div class="flex items-center gap-3 text-[10px] font-mono uppercase tracking-widest text-status-cyan">
+<span class="material-symbols-outlined text-xs">done</span> Calendar Hard-Locking
+      </div>
+</div>
+</div>
+</section>
+<!-- 5. #automation: Neural Network / Automation systems section -->
+<section class="section-grid grid-cols-1 border-b border-graphite" id="automation">
+<div class="p-6 md:p-12 border-b border-graphite entrance-anim">
+<span class="font-mono text-neon-indigo text-[10px] uppercase tracking-widest block mb-4">Neural Intelligence</span>
+<h2 class="text-4xl md:text-5xl font-black">AUTOMATION SYSTEMS</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2">
+<div class="grid-module p-6 md:p-12 border-r border-graphite entrance-anim">
+<h4 class="text-2xl font-black mb-6 uppercase">Self-Optimizing Funnels</h4>
+<p class="text-white/40 metrics-text">Our neural network analyzes real-time conversion data to adjust ad copy and landing page elements autonomously, maximizing ROI without manual interference.</p>
+</div>
+<div class="grid-module p-6 md:p-12 entrance-anim stagger-1">
+<h4 class="text-2xl font-black mb-6 uppercase">Predictive Lead Scoring</h4>
+<p class="text-white/40 metrics-text">Advanced algorithms score leads based on hundreds of data points, ensuring your sales team only speaks with high-intent prospects ready to purchase.</p>
+</div>
+</div>
+</section>
+<!-- 6. #os: Veluse OS / Centralized Intelligence section -->
+<section class="section-grid grid-cols-1 md:grid-cols-2 border-b border-graphite" id="os">
+<div class="md:col-span-2 p-6 md:p-12 border-b border-graphite entrance-anim">
+<span class="font-mono text-neon-indigo text-[10px] uppercase tracking-widest block mb-4">Veluse OS</span>
+<h2 class="text-4xl md:text-5xl font-black">CENTRALIZED INTELLIGENCE</h2>
+<p class="text-white/40 mt-4 font-mono text-[13px] uppercase tracking-wider">For elite agencies operating at the frontier of AI.</p>
+</div>
+<div class="grid-module p-6 md:p-12 entrance-anim border-r border-b border-graphite">
+<div class="flex items-start gap-8">
+<div class="w-10 h-10 border border-graphite flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-neon-indigo text-xl">science</span>
+</div>
+<div>
+<h5 class="text-lg font-black mb-3">OFFER LAB</h5>
+<p class="text-white/50 metrics-text leading-relaxed">Architecting IRRESISTIBLE offers that command premium pricing and kill the competition instantly.</p>
+</div>
+</div>
+</div>
+<div class="grid-module p-6 md:p-12 entrance-anim border-b border-graphite stagger-1">
+<div class="flex items-start gap-8">
+<div class="w-10 h-10 border border-graphite flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-neon-indigo text-xl">architecture</span>
+</div>
+<div>
+<h5 class="text-lg font-black mb-3">BLUEPRINTS</h5>
+<p class="text-white/50 metrics-text leading-relaxed">Verified campaign skeletons that bypass testing phases. We deploy what is already working.</p>
+</div>
+</div>
+</div>
+<div class="grid-module p-6 md:p-12 entrance-anim border-r border-graphite stagger-2">
+<div class="flex items-start gap-8">
+<div class="w-10 h-10 border border-graphite flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-neon-indigo text-xl">memory</span>
+</div>
+<div>
+<h5 class="text-lg font-black mb-3">AI STACK</h5>
+<p class="text-white/50 metrics-text leading-relaxed">Proprietary neural networks for copy generation, media buying optimization, and lead scoring.</p>
+</div>
+</div>
+</div>
+<div class="grid-module p-6 md:p-12 entrance-anim stagger-3">
+<div class="flex items-start gap-8">
+<div class="w-10 h-10 border border-graphite flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-neon-indigo text-xl">monitoring</span>
+</div>
+<div>
+<h5 class="text-lg font-black mb-3">PIPELINE INTELLIGENCE</h5>
+<p class="text-white/50 metrics-text leading-relaxed">Live dashboard analytics. See your ROI, LTV, and CAC in a single, unforgeable pane of glass.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. #roadmap: Implementation Timeline / Roadmap section -->
+<section class="section-grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-6 md:gap-8 xl:gap-10 border-b border-graphite bg-void-black p-6 md:p-16" id="roadmap">
+<div class="col-span-1 md:col-span-2 xl:col-span-12 p-6 md:p-12 border-b border-graphite entrance-anim">
+<h2 class="text-4xl md:text-5xl font-black">IMPLEMENTATION TIMELINE</h2>
+<p class="font-mono text-white/40 text-[10px] uppercase tracking-[0.3em] mt-4">From zero to scaled in 21 days.</p>
+</div>
+<div class="grid-module col-span-1 xl:col-span-6 p-6 md:p-12 border border-graphite bg-white/[0.03] backdrop-blur-md entrance-anim">
+<div class="flex justify-between items-start mb-12">
+<span class="font-mono text-neon-indigo text-[13px] font-bold">[ DAY 01 ]</span>
+<div class="w-2 h-2 rounded-full bg-neon-indigo shadow-[0_0_8px_#4F46E5]"></div>
+</div>
+<h6 class="text-xl font-black mb-4">SYSTEMS AUDIT</h6>
+<p class="text-white/50 metrics-text">Deep dive into current funnel performance and bottleneck identification.</p>
+</div>
+<div class="grid-module col-span-1 xl:col-span-6 p-6 md:p-12 border border-graphite bg-white/[0.03] backdrop-blur-md entrance-anim stagger-1">
+<div class="flex justify-between items-start mb-12">
+<span class="font-mono text-white/40 text-[13px] font-bold">[ DAY 07 ]</span>
+<div class="w-2 h-2 rounded-full bg-graphite"></div>
+</div>
+<h6 class="text-xl font-black mb-4">PROTOCOL DEPLOYMENT</h6>
+<p class="text-white/50 metrics-text">Full tech stack integration and pixel live-fire testing.</p>
+</div>
+<div class="grid-module col-span-1 xl:col-span-6 p-6 md:p-12 border border-graphite bg-white/[0.03] backdrop-blur-md entrance-anim stagger-2">
+<div class="flex justify-between items-start mb-12">
+<span class="font-mono text-white/40 text-[13px] font-bold">[ DAY 14 ]</span>
+<div class="w-2 h-2 rounded-full bg-graphite"></div>
+</div>
+<h6 class="text-xl font-black mb-4">TRAFFIC SCALING</h6>
+<p class="text-white/50 metrics-text">Omni-channel campaigns activated at 30% budget for calibration.</p>
+</div>
+<div class="grid-module col-span-1 xl:col-span-6 p-6 md:p-12 border border-graphite bg-white/[0.03] backdrop-blur-md entrance-anim stagger-3">
+<div class="flex justify-between items-start mb-12">
+<span class="font-mono text-neon-indigo text-[13px] font-bold">[ DAY 21 ]</span>
+<div class="w-2 h-2 rounded-full bg-neon-indigo shadow-[0_0_8px_#4F46E5]"></div>
+</div>
+<h6 class="text-xl font-black mb-4">SYSTEM AUTONOMY</h6>
+<p class="text-white/50 metrics-text">Full budget rollout. The revenue engine is now fully operational.</p>
+</div>
+</section>
+<!-- Footer CTA -->
+<footer class="section-grid grid-cols-1" id="contact">
+<div class="py-24 px-6 md:p-40 text-center relative overflow-hidden" id="final-conversion">
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,_rgba(79,70,229,0.1),transparent_70%)] pointer-events-none"></div>
+<div class="max-w-4xl mx-auto relative z-10 entrance-anim">
+<h2 class="text-5xl md:text-8xl font-black leading-[0.9] mb-16">
+        READY TO SCALE YOUR <span class="text-neon-indigo">HIGH-TICKET</span> ACQUISITION?
+      </h2>
+<button class="primary-btn pipeline-audit-btn cta-trigger px-16 py-8 uppercase tracking-widest">
+        Book A Strategy Call
+      </button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 border-t border-graphite">
+<div class="grid-module p-6 md:p-12 border-r border-graphite">
+<div class="flex items-center mb-8">
+<span class="text-2xl font-sans font-black text-white tracking-tightest uppercase">VELUSE</span>
+</div>
+<p class="text-white/40 text-[10px] font-mono mb-4">Precision Revenue Architecture</p>
+<p class="text-[9px] text-white/20 font-mono uppercase">© 2026 VELUSE. ALL RIGHTS RESERVED.</p>
+</div>
+<div class="grid-module p-6 md:p-12 border-r border-graphite">
+<h4 class="font-mono text-neon-indigo text-[10px] uppercase tracking-widest mb-8">Contact</h4>
+<ul class="space-y-4 text-white/50 font-mono">
+<li class="flex items-center gap-3 hover:text-white transition-colors cursor-pointer text-[11px]">
+<span class="material-symbols-outlined text-sm">alternate_email</span>
+          deploy@veluse.com
+        </li>
+<li class="flex items-center gap-3 text-[11px]">
+<span class="material-symbols-outlined text-sm">public</span>
+          Global Infrastructure
+        </li>
+<li class="flex items-center gap-3 text-[11px]">
+<span class="material-symbols-outlined text-sm">bolt</span>
+          SLA Support: 24/7/365
+        </li>
+</ul>
+</div>
+<div class="grid-module p-6 md:p-12 border-r border-graphite">
+<h4 class="font-mono text-neon-indigo text-[10px] uppercase tracking-widest mb-8">Legal</h4>
+<ul class="space-y-4 text-white/50 font-mono text-[11px]">
+<li class=""><button class="hover:text-white transition-colors text-left" onclick="openLegalModal('privacy')">Privacy Policy</button></li>
+<li class=""><button class="hover:text-white transition-colors text-left" onclick="openLegalModal('terms')">Terms of Service</button></li>
+</ul>
+</div>
+<div class="grid-module p-6 md:p-12">
+<div class="h-full flex flex-col justify-between">
+<span class="text-[8px] text-white/10 uppercase tracking-[0.5em]">Network Status</span>
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 bg-status-cyan rounded-full animate-pulse"></div>
+<span class="font-mono text-status-cyan text-[10px] uppercase">Node_Active_Region_01</span>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<script>
+// Telemetry Engine
+const canvas = document.getElementById('telemetryCanvas');
+const ctx = canvas.getContext('2d');
+const teleX = document.getElementById('tele-x');
+const teleY = document.getElementById('tele-y');
+const teleV = document.getElementById('tele-v');
+
+let width = canvas.width = window.innerWidth;
+let height = canvas.height = window.innerHeight;
+
+const mouse = { x: null, y: null, targetX: null, targetY: null, radius: 250, speed: 0 };
+const gridNodes = [];
+const pulses = [];
+const connectionDistance = 240;
+const numNodes = 140;
+
+for (let i = 0; i < numNodes; i++) {
+    gridNodes.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.8,
+        vy: (Math.random() - 0.5) * 0.8,
+        baseVx: (Math.random() - 0.5) * 0.8,
+        baseVy: (Math.random() - 0.5) * 0.8
+    });
+}
+
+let lastMouseX = 0;
+let lastMouseY = 0;
+
+window.addEventListener('mousemove', (e) => {
+    mouse.targetX = e.clientX;
+    mouse.targetY = e.clientY;
+    
+    const movementX = e.clientX - lastMouseX;
+    const movementY = e.clientY - lastMouseY;
+    mouse.speed = Math.min(Math.hypot(movementX, movementY), 100);
+    
+    lastMouseX = e.clientX;
+    lastMouseY = e.clientY;
+
+    teleX.textContent = String(Math.round(e.clientX)).padStart(4, '0');
+    teleY.textContent = String(Math.round(e.clientY)).padStart(4, '0');
+    teleV.textContent = mouse.speed.toFixed(2);
+});
+
+window.addEventListener('mouseleave', () => { mouse.targetX = null; mouse.targetY = null; });
+window.addEventListener('resize', () => { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; });
+
+function animateGridEngine() {
+    ctx.clearRect(0, 0, width, height);
+    
+    if (mouse.targetX !== null) {
+        mouse.x += (mouse.targetX - mouse.x) * 0.12;
+        mouse.y += (mouse.targetY - mouse.y) * 0.12;
+        
+        const gradient = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, mouse.radius);
+        gradient.addColorStop(0, 'rgba(79, 70, 229, 0.15)');
+        gradient.addColorStop(1, 'rgba(79, 70, 229, 0)');
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(mouse.x, mouse.y, mouse.radius, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    gridNodes.forEach(node => {
+        if (mouse.x !== null) {
+            const dx = node.x - mouse.x;
+            const dy = node.y - mouse.y;
+            const distance = Math.hypot(dx, dy);
+            if (distance < mouse.radius) {
+                const force = (mouse.radius - distance) / mouse.radius;
+                const angle = Math.atan2(dy, dx);
+                node.vx += Math.cos(angle) * force * 4;
+                node.vy += Math.sin(angle) * force * 4;
+            }
+        }
+        node.vx += (node.baseVx - node.vx) * 0.05;
+        node.vy += (node.baseVy - node.vy) * 0.05;
+        node.vx *= 0.95;
+        node.vy *= 0.95;
+        node.x += node.vx;
+        node.y += node.vy;
+
+        if (node.x < -50) node.x = width + 50;
+        if (node.x > width + 50) node.x = -50;
+        if (node.y < -50) node.y = height + 50;
+        if (node.y > height + 50) node.y = -50;
+
+        ctx.fillStyle = 'rgba(79, 70, 229, 0.55)'; 
+        if (mouse.x !== null && Math.hypot(node.x - mouse.x, node.y - mouse.y) < mouse.radius) {
+            ctx.fillStyle = 'rgba(0, 240, 255, 0.85)';
+        }
+        ctx.fillRect(node.x - 2, node.y - 2, 4, 4);
+    });
+
+    ctx.lineWidth = 1;
+    for (let i = 0; i < gridNodes.length; i++) {
+        for (let j = i + 1; j < gridNodes.length; j++) {
+            const n1 = gridNodes[i];
+            const n2 = gridNodes[j];
+            const dist = Math.hypot(n1.x - n2.x, n1.y - n2.y);
+            if (dist < connectionDistance) {
+                const alpha = (1 - (dist / connectionDistance)) * 0.35;
+                ctx.strokeStyle = `rgba(79, 70, 229, ${alpha})`;
+                ctx.beginPath();
+                ctx.moveTo(n1.x, n1.y);
+                ctx.lineTo(n2.x, n2.y);
+                ctx.stroke();
+            }
+        }
+    }
+
+    if (Math.random() < 0.18) {
+        const startNode = gridNodes[Math.floor(Math.random() * gridNodes.length)];
+        const neighbors = gridNodes.filter(n => n !== startNode && Math.hypot(n.x - startNode.x, n.y - startNode.y) < connectionDistance);
+        if (neighbors.length > 0) {
+            pulses.push({
+                from: startNode, to: neighbors[Math.floor(Math.random() * neighbors.length)], progress: 0,
+                speed: 0.04 + Math.random() * 0.04, color: Math.random() > 0.3 ? 'rgba(79, 70, 229, 0.95)' : 'rgba(0, 240, 255, 0.95)'
+            });
+        }
+    }
+
+    for (let i = pulses.length - 1; i >= 0; i--) {
+        const p = pulses[i];
+        p.progress += p.speed;
+        if (p.progress >= 1) { pulses.splice(i, 1); continue; }
+        const currX = p.from.x + (p.to.x - p.from.x) * p.progress;
+        const currY = p.from.y + (p.to.y - p.from.y) * p.progress;
+        ctx.strokeStyle = p.color; ctx.beginPath(); ctx.moveTo(p.from.x, p.from.y); ctx.lineTo(currX, currY); ctx.stroke();
+        ctx.fillStyle = p.color; ctx.beginPath(); ctx.arc(currX, currY, 2.5, 0, Math.PI * 2); ctx.fill();
+    }
+    requestAnimationFrame(animateGridEngine);
+}
+animateGridEngine();
+
+// Interaction & Dynamic Styles
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+    } else {
+        nav.classList.remove('scrolled');
+    }
+});
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.entrance-anim').forEach(el => observer.observe(el));
+
+window.addEventListener('mousemove', (e) => {
+    document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+    document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+    document.querySelectorAll('.grid-module').forEach(module => {
+        const rect = module.getBoundingClientRect();
+        module.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+        module.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+    });
+});
+
+// Navigation link smooth scroll
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) target.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+});
+
+// Audit trigger modal activation
+document.querySelectorAll('.cta-trigger, .pipeline-audit-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        openAuditModal();
+    });
+});
+</script>
+
+<!-- Legal Modal Overlay -->
+<div id="legal-modal" class="fixed inset-0 z-[10000] hidden items-center justify-center bg-black/85 backdrop-blur-md opacity-0 transition-opacity duration-300" onclick="if(event.target === this) closeLegalModal()">
+  <div class="w-full max-w-2xl bg-void-black border border-graphite p-6 md:p-12 relative flex flex-col max-h-[80vh] mx-4 transition-transform duration-300 scale-95" id="legal-modal-content">
+    <!-- Close button top right -->
+    <button onclick="closeLegalModal()" class="absolute top-6 right-6 font-mono text-[11px] text-white/40 hover:text-white tracking-widest uppercase transition-colors">
+      [ Close ]
+    </button>
+    
+    <!-- Modal Title -->
+    <h3 id="legal-modal-title" class="font-sans font-black text-2xl text-white tracking-tightest mb-6 uppercase">
+      PRIVACY POLICY
+    </h3>
+    
+    <!-- Scrollable content area -->
+    <div id="legal-modal-body" class="overflow-y-auto text-[13px] text-white/60 font-mono border border-graphite p-6 bg-[#0c0c12]/50 custom-scrollbar whitespace-pre-wrap leading-relaxed">
+      <!-- Content injected by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- Audit Form Modal Overlay -->
+<div id="audit-modal" class="fixed inset-0 z-[10000] hidden items-center justify-center bg-black/85 backdrop-blur-md opacity-0 transition-opacity duration-300" onclick="if(event.target === this) closeAuditModal()">
+  <div class="w-full max-w-2xl bg-void-black border border-graphite p-6 md:p-12 relative flex flex-col max-h-[90vh] mx-4 transition-transform duration-300 scale-95 overflow-y-auto custom-scrollbar" id="audit-modal-content">
+    <!-- Close button top right -->
+    <button onclick="closeAuditModal()" class="absolute top-6 right-6 font-mono text-[11px] text-white/40 hover:text-white tracking-widest uppercase transition-colors">
+      [ Close ]
+    </button>
+    
+    <div id="audit-form-wrapper" class="w-full my-auto">
+      <div class="mb-10">
+        <span class="font-mono text-neon-indigo text-[10px] uppercase tracking-[0.2em] block mb-2">[ SYSTEM INTAKE ]</span>
+        <h3 class="text-3xl font-black text-white uppercase tracking-tightest">BOOK A STRATEGY CALL</h3>
+      </div>
+      
+      <!-- Form -->
+      <form id="audit-form" class="space-y-6" onsubmit="submitAuditForm(event)">
+        <div>
+          <label class="block font-mono text-[10px] font-normal uppercase tracking-[0.15em] text-[#52525B] mb-1" for="lead-name">01 // Name</label>
+          <input type="text" id="lead-name" required class="w-full bg-transparent border-t-0 border-x-0 border-b border-[#16161F] focus:border-status-cyan focus:ring-0 text-white font-mono text-[13px] px-0 py-3 outline-none transition-none rounded-none placeholder:text-[#A1A1AA] placeholder:text-[11px] placeholder:font-mono placeholder:tracking-[0.1em]" placeholder="e.g. John Doe"/>
+        </div>
+        
+        <div>
+          <label class="block font-mono text-[10px] font-normal uppercase tracking-[0.15em] text-[#52525B] mb-1" for="lead-company">02 // Organization</label>
+          <input type="text" id="lead-company" required class="w-full bg-transparent border-t-0 border-x-0 border-b border-[#16161F] focus:border-status-cyan focus:ring-0 text-white font-mono text-[13px] px-0 py-3 outline-none transition-none rounded-none placeholder:text-[#A1A1AA] placeholder:text-[11px] placeholder:font-mono placeholder:tracking-[0.1em]" placeholder="e.g. Apex Med Spa"/>
+        </div>
+        
+        <div>
+          <label class="block font-mono text-[10px] font-normal uppercase tracking-[0.15em] text-[#52525B] mb-1" for="lead-email">03 // Business Email</label>
+          <input type="email" id="lead-email" required class="w-full bg-transparent border-t-0 border-x-0 border-b border-[#16161F] focus:border-status-cyan focus:ring-0 text-white font-mono text-[13px] px-0 py-3 outline-none transition-none rounded-none placeholder:text-[#A1A1AA] placeholder:text-[11px] placeholder:font-mono placeholder:tracking-[0.1em]" placeholder="john@company.com"/>
+        </div>
+        
+        <div>
+          <label class="block font-mono text-[10px] font-normal uppercase tracking-[0.15em] text-[#52525B] mb-1" for="lead-revenue">04 // Monthly Revenue Band</label>
+          <select id="lead-revenue" required class="w-full bg-transparent border-t-0 border-x-0 border-b border-[#16161F] focus:border-status-cyan focus:ring-0 text-white font-mono text-[13px] px-0 py-3 outline-none transition-none rounded-none">
+            <option value="" disabled selected class="text-[#A1A1AA] bg-void-black">SELECT REVENUE TIER...</option>
+            <option value="&lt;$20K" class="bg-void-black">&lt; $20K / mo</option>
+            <option value="$20K-$50K" class="bg-void-black">$20K - $50K / mo</option>
+            <option value="$50K-$100K" class="bg-void-black">$50K - $100K / mo</option>
+            <option value="&gt;$100K" class="bg-void-black">&gt; $100K / mo</option>
+          </select>
+        </div>
+        
+        <div>
+          <label class="block font-mono text-[10px] font-normal uppercase tracking-[0.15em] text-[#52525B] mb-1" for="lead-goals">05 // Goals &amp; Bottlenecks</label>
+          <textarea id="lead-goals" rows="3" required class="w-full bg-transparent border-t-0 border-x-0 border-b border-[#16161F] focus:border-status-cyan focus:ring-0 text-white font-mono text-[13px] px-0 py-3 outline-none transition-none resize-none rounded-none placeholder:text-[#A1A1AA] placeholder:text-[11px] placeholder:font-mono placeholder:tracking-[0.1em]" placeholder="WHAT ARE YOUR CURRENT GROWTH BOTTLENECK PARAMETERS?"></textarea>
+        </div>
+        
+        <div class="pt-4">
+          <button type="submit" id="submit-btn" class="w-full bg-white text-black font-space font-bold py-4 text-xl uppercase tracking-[-0.03em] border border-transparent hover:bg-void-black hover:text-white hover:border-[#4F46E5] hover:shadow-[0_0_15px_rgba(79,70,229,0.6)] focus:bg-void-black focus:text-white focus:border-[#4F46E5] focus:shadow-[0_0_15px_rgba(79,70,229,0.6)] outline-none rounded-none transition-none cursor-pointer">
+            EXECUTE SYSTEM DIAGNOSTICS
+          </button>
+        </div>
+      </form>
+    </div>
+    
+    <!-- Success Screen (hidden by default) -->
+    <div id="audit-success" class="hidden flex-col items-center justify-center py-20 text-center w-full my-auto">
+      <span class="material-symbols-outlined text-6xl text-status-cyan mb-6 animate-pulse">
+        terminal
+      </span>
+      <h4 class="font-sans font-black text-2xl text-white tracking-tightest mb-2 uppercase">
+        TRANSMISSION SECURED
+      </h4>
+      <div class="w-16 h-1 bg-status-cyan mb-6"></div>
+      <p class="text-white/60 font-mono text-[13px] leading-relaxed max-w-sm">
+        Lead data has been encrypted and injected into the pipeline diagnostic queue. Our systems architect will respond within 12 cycles.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+function openLegalModal(type) {
+    const modal = document.getElementById('legal-modal');
+    const content = document.getElementById('legal-modal-content');
+    const title = document.getElementById('legal-modal-title');
+    const body = document.getElementById('legal-modal-body');
+    
+    if (type === 'privacy') {
+        title.textContent = 'Privacy Policy';
+        body.textContent = `[PRIVACY POLICY]
+v1.0.4-production
+
+1. TELEMETRY RECORDING
+All interaction coordinates (CURS_COORD_X/Y) are tracked live for matrix render optimization. No persistent personal identification is cached.
+
+2. COOKIE-LESS LOCAL STORAGE
+We utilize localized session states to store selected node preferences. No tracking pixels are broadcast to third-party ad brokers.
+
+3. HIPAA COMPLIANCE SHIELD
+All patient acquisition forms use end-to-end telemetry encryption. Real-time patient data is sanitized before entering optimization queues.
+
+4. USER INQUIRIES
+For administrative compliance issues, contact deploy@veluse.com.
+
+5. DATA SECURITY & RETENTION
+We implement commercial-grade security protocols. Patient pipeline telemetry is kept in active caches for 90 days before cold storage archiving.
+
+6. AUDIT TRAILS
+System administrative actions are cryptographically logged to prevent tampering.`;
+    } else if (type === 'terms') {
+        title.textContent = 'Terms of Service';
+        body.textContent = `[TERMS OF SERVICE]
+v2.0.1-stable
+
+1. SYSTEM LICENSE
+Access to the Veluse Patient Acquisition System is granted under strict SLA constraints. Unauthorized node-scraping is blocked.
+
+2. RUNTIME STABILITY
+While the telemetry engine runs at 60 FPS, user interface frame rates are dependent on local browser GPU acceleration.
+
+3. CLIENT LIABILITY
+The client assumes full responsibility for local clinical marketing compliance under active medical board rules.
+
+4. AUTOMATIC TERMINATION
+Failure to maintain API gateway credentials will trigger immediate pipeline quarantine.
+
+5. INTELLECTUAL PROPERTY
+All custom telemetry canvases, UI templates, and machine learning pipeline modules remain the exclusive property of Veluse.
+
+6. SERVICE LEVELS
+We aim for 99.9% uptime on active patient routing scripts. Maintenance windows are announced 24 hours in advance.`;
+    }
+    
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        content.classList.remove('scale-95');
+    }, 10);
+    document.body.style.overflow = 'hidden'; // Disable page scrolling
+}
+
+function closeLegalModal() {
+    const modal = document.getElementById('legal-modal');
+    const content = document.getElementById('legal-modal-content');
+    
+    modal.classList.add('opacity-0');
+    content.classList.add('scale-95');
+    setTimeout(() => {
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+        document.body.style.overflow = ''; // Re-enable page scrolling
+    }, 300);
+}
+
+function openAuditModal() {
+    const modal = document.getElementById('audit-modal');
+    const content = document.getElementById('audit-modal-content');
+    const form = document.getElementById('audit-form');
+    const wrapper = document.getElementById('audit-form-wrapper');
+    const success = document.getElementById('audit-success');
+    const submitBtn = document.getElementById('submit-btn');
+    
+    if (form) form.reset();
+    if (wrapper) wrapper.classList.remove('hidden');
+    if (success) {
+        success.classList.add('hidden');
+        success.classList.remove('flex');
+    }
+    if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'EXECUTE SYSTEM DIAGNOSTICS';
+    }
+    
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        content.classList.remove('scale-95');
+        const firstInput = document.getElementById('lead-name');
+        if (firstInput) firstInput.focus();
+    }, 10);
+    document.body.style.overflow = 'hidden'; // Disable page scrolling
+}
+
+function closeAuditModal() {
+    const modal = document.getElementById('audit-modal');
+    const content = document.getElementById('audit-modal-content');
+    
+    modal.classList.add('opacity-0');
+    content.classList.add('scale-95');
+    setTimeout(() => {
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+        document.body.style.overflow = ''; // Re-enable page scrolling
+    }, 300);
+}
+
+function submitAuditForm(e) {
+    e.preventDefault();
+    const submitBtn = document.getElementById('submit-btn');
+    const wrapper = document.getElementById('audit-form-wrapper');
+    const success = document.getElementById('audit-success');
+    
+    const name = document.getElementById('lead-name').value;
+    const organization = document.getElementById('lead-company').value;
+    const email = document.getElementById('lead-email').value;
+    const revenue = document.getElementById('lead-revenue').value;
+    const bottlenecks = document.getElementById('lead-goals').value;
+    
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'INJECTING NODES...';
+    
+    const payload = {
+        name: name,
+        organization: organization,
+        email: email,
+        revenue: revenue,
+        bottlenecks: bottlenecks
+    };
+    
+    fetch('https://script.google.com/macros/s/AKfycbyuWTgY13IwxJSct1U7oqo8DW1W6WnNpvNgaOix8g_G-7toEya-Kd_tS-XrFkZjT23YZQ/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(() => {
+        submitBtn.textContent = '[ TRANSMISSION SECURED ]';
+        document.querySelectorAll('.cta-trigger, .pipeline-audit-btn').forEach(btn => {
+            btn.textContent = '[ TRANSMISSION SECURED ]';
+        });
+        if (wrapper) wrapper.classList.add('hidden');
+        if (success) {
+            success.classList.remove('hidden');
+            success.classList.add('flex');
+        }
+    })
+    .catch((err) => {
+        console.error('Transmission failed:', err);
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'RETRY TRANSMISSION';
+    });
+}
+</script>
+</body></html>
