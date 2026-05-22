@@ -210,7 +210,7 @@
         CURS_COORD_Y: <span id="tele-y">0000</span> px<br/>
         MATRIX_VELOCITY: <span id="tele-v">0.00</span> nodes/s
     </div>
-<canvas id="telemetryCanvas" class="block opacity-[0.22] scale-90 blur-[0.5px] pointer-events-none mix-blend-screen md:opacity-75 md:scale-100 md:blur-none md:pointer-events-auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></canvas>
+<canvas id="telemetryCanvas" class="block opacity-50 scale-95 blur-[0.3px] pointer-events-none mix-blend-screen md:opacity-75 md:scale-100 md:blur-none md:pointer-events-auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></canvas>
 </div>
 <!-- BEGIN: Navigation -->
 <nav class="fixed top-0 left-0 w-full z-[9999] bg-transparent border-b border-transparent px-6 md:px-10 py-4 flex justify-between items-center h-24" id="main-nav">
@@ -601,17 +601,19 @@ let height = canvas.height = window.innerHeight;
 const mouse = { x: null, y: null, targetX: null, targetY: null, radius: 250, speed: 0 };
 const gridNodes = [];
 const pulses = [];
-const connectionDistance = 240;
-const numNodes = 140;
+const isMobile = window.innerWidth < 768;
+const connectionDistance = isMobile ? 120 : 240;
+const numNodes = isMobile ? 25 : 140;
+const speedFactor = isMobile ? 0.35 : 0.8;
 
 for (let i = 0; i < numNodes; i++) {
     gridNodes.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.8,
-        vy: (Math.random() - 0.5) * 0.8,
-        baseVx: (Math.random() - 0.5) * 0.8,
-        baseVy: (Math.random() - 0.5) * 0.8
+        vx: (Math.random() - 0.5) * speedFactor,
+        vy: (Math.random() - 0.5) * speedFactor,
+        baseVx: (Math.random() - 0.5) * speedFactor,
+        baseVy: (Math.random() - 0.5) * speedFactor
     });
 }
 
@@ -677,7 +679,7 @@ function animateGridEngine() {
         if (node.y < -50) node.y = height + 50;
         if (node.y > height + 50) node.y = -50;
 
-        ctx.fillStyle = 'rgba(79, 70, 229, 0.55)'; 
+        ctx.fillStyle = isMobile ? 'rgba(0, 240, 255, 0.85)' : 'rgba(79, 70, 229, 0.55)'; 
         if (mouse.x !== null && Math.hypot(node.x - mouse.x, node.y - mouse.y) < mouse.radius) {
             ctx.fillStyle = 'rgba(0, 240, 255, 0.85)';
         }
@@ -691,8 +693,8 @@ function animateGridEngine() {
             const n2 = gridNodes[j];
             const dist = Math.hypot(n1.x - n2.x, n1.y - n2.y);
             if (dist < connectionDistance) {
-                const alpha = (1 - (dist / connectionDistance)) * 0.35;
-                ctx.strokeStyle = `rgba(79, 70, 229, ${alpha})`;
+                const alpha = (1 - (dist / connectionDistance)) * (isMobile ? 0.65 : 0.35);
+                ctx.strokeStyle = isMobile ? `rgba(0, 240, 255, ${alpha})` : `rgba(79, 70, 229, ${alpha})`;
                 ctx.beginPath();
                 ctx.moveTo(n1.x, n1.y);
                 ctx.lineTo(n2.x, n2.y);
@@ -707,7 +709,7 @@ function animateGridEngine() {
         if (neighbors.length > 0) {
             pulses.push({
                 from: startNode, to: neighbors[Math.floor(Math.random() * neighbors.length)], progress: 0,
-                speed: 0.04 + Math.random() * 0.04, color: Math.random() > 0.3 ? 'rgba(79, 70, 229, 0.95)' : 'rgba(0, 240, 255, 0.95)'
+                speed: 0.04 + Math.random() * 0.04, color: isMobile ? 'rgba(0, 240, 255, 0.95)' : (Math.random() > 0.3 ? 'rgba(79, 70, 229, 0.95)' : 'rgba(0, 240, 255, 0.95)')
             });
         }
     }
