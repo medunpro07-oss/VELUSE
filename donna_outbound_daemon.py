@@ -122,5 +122,61 @@ def execute_sequencer():
 
     print(f"[*] Complete. Total high-intent touchpoints executed in this run: {batch_sends}")
 
+# Native Gemini Agent Tools Wrappers
+def read_pipeline_sheet() -> list[dict]:
+    """Connects to the Google Sheet 'VELUSE // Live Inbound Pipeline Database', 
+    reads the 'Outbound_Campaign' worksheet, and returns all records as a list of dictionaries.
+    
+    Returns:
+        A list of dictionaries representing the row records in the spreadsheet.
+    """
+    creds = authenticate_workspace()
+    gc = gspread.authorize(creds)
+    sheet = gc.open('VELUSE // Live Inbound Pipeline Database').worksheet("Outbound_Campaign")
+    return sheet.get_all_records()
+
+def send_outbound_email(to_email: str, subject: str, body_text: str) -> bool:
+    """Sends a cold outreach or follow-up email to the target recipient via the Gmail API.
+    
+    Args:
+        to_email: The destination email address.
+        subject: The subject header of the outbound email.
+        body_text: The plain text message body of the email.
+        
+    Returns:
+        True if the email was successfully transmitted, False otherwise.
+    """
+    creds = authenticate_workspace()
+    gmail_service = build('gmail', 'v1', credentials=creds)
+    return send_email(gmail_service, to_email, subject, body_text)
+
+def update_lead_status(row_index: int, status: str) -> bool:
+    """Updates the primary tracking status cell of a specific row in the Outbound_Campaign 
+    spreadsheet and automatically stamps the current date.
+    
+    Args:
+        row_index: The 1-based row index in the spreadsheet.
+        status: The new status string to apply (e.g., 'SENT', 'INBOX_WARM', 'OPT_OUT').
+        
+    Returns:
+        True if the update was successful, False otherwise.
+    """
+    try:
+        creds = authenticate_workspace()
+        gc = gspread.authorize(creds)
+        sheet = gc.open('VELUSE // Live Inbound Pipeline Database').worksheet("Outbound_Campaign")
+        headers = [h.lower().strip().replace(" ", "_") for h in sheet.row_values(1)]
+        
+        status_col = headers.index('touch_1_status') + 1
+        date_col = headers.index('touch_1_date') + 1
+        today_str = datetime.now().strftime("%Y-%m-%d")
+        
+        sheet.update_cell(row_index, status_col, status)
+        sheet.update_cell(row_index, date_col, today_str)
+        return True
+    except Exception as e:
+        print(f"[-] Failed to update sheet lead status: {e}")
+        return False
+
 if __name__ == "__main__":
     execute_sequencer()
