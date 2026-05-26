@@ -29,8 +29,8 @@ def authenticate_workspace():
             token.write(creds.to_json())
     return creds
 
-def send_email(gmail_service, to_email, subject, body_text):
-    message = MIMEText(body_text)
+def send_email(gmail_service, to_email, subject, body_html):
+    message = MIMEText(body_html, "html")
     message['to'] = to_email
     message['subject'] = subject
     raw_message = base64.urlsafe_b64encode(message.as_bytes()).decode('utf-8')
@@ -100,21 +100,29 @@ def execute_sequencer():
 
         print(f"[*] Dispatching high-intent Touch 1 to: {email}")
         
+        tracking_token = base64.b64encode(str(idx).encode()).decode().replace("=", "")
+        
         subject = f"Question about your {business_name} patient pipeline"
-        body = (
-            f"Hey,\n\n"
-            f"I was looking over your digital layout for {business_name} and wanted to reach out.\n\n"
-            f"{ai_opener}\n\n"
-            f"We ran a brief diagnostic scan across your landing pages and noticed that your {tracking_leak} is currently down "
-            f"or misconfigured. This means you are driving premium patient intent locally but letting them exit without a basic retargeting sequence.\n\n"
-            f"We put together a clean 3-point competitor market map showing exactly how to patch this layout and secure those lost bookings. "
-            f"Let me know if you want me to drop the 60-second video overview context across to your team. No strings attached.\n\n"
-            f"Best,\n"
-            f"Medun\n"
-            f"Founder, Veluse Agency"
+        body_html = (
+            f"<html>"
+            f"<body>"
+            f"<p>Hey,</p>"
+            f"<p>I was looking over your digital layout for {business_name} and wanted to reach out.</p>"
+            f"<p>{ai_opener}</p>"
+            f"<p>We ran a brief diagnostic scan across your landing pages and noticed that your {tracking_leak} is currently down "
+            f"or misconfigured. This means you are driving premium patient intent locally but letting them exit without a basic retargeting sequence.</p>"
+            f"<p>We put together a clean 3-point competitor market map showing exactly how to patch this layout and secure those lost bookings. "
+            f"You can review our profile at <a href=\"https://veluse.vercel.app/?utm_source=outbound&utm_campaign=touch1&utm_term={idx}\">veluse.vercel.app</a>.</p>"
+            f"<p>Let me know if you want me to drop the 60-second video overview context across to your team. No strings attached.</p>"
+            f"<p>Best,<br />"
+            f"Medun<br />"
+            f"Founder, Veluse Agency</p>"
+            f"<img src=\"https://veluse.vercel.app/api/track?id={tracking_token}\" width=\"1\" height=\"1\" style=\"display:none !important;\" />"
+            f"</body>"
+            f"</html>"
         )
 
-        if send_email(gmail_service, email, subject, body):
+        if send_email(gmail_service, email, subject, body_html):
             sheet.update_cell(idx, t1_status_idx, "SENT")
             sheet.update_cell(idx, t1_date_idx, today_str)
             batch_sends += 1
@@ -148,7 +156,12 @@ def send_outbound_email(to_email: str, subject: str, body_text: str) -> bool:
     """
     creds = authenticate_workspace()
     gmail_service = build('gmail', 'v1', credentials=creds)
-    return send_email(gmail_service, to_email, subject, body_text)
+    
+    body_html = body_text
+    if not body_html.strip().startswith("<html"):
+        body_html = f"<html><body><p>{body_html.replace(chr(10), '<br />')}</p></body></html>"
+        
+    return send_email(gmail_service, to_email, subject, body_html)
 
 def update_lead_status(row_index: int, status: str) -> bool:
     """Updates the primary tracking status cell of a specific row in the Outbound_Campaign 
