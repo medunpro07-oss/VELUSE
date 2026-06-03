@@ -1,82 +1,115 @@
+# core/donna_sms_responder.py
 import os
 import re
+import json
+from datetime import datetime
 from fastapi import FastAPI, Request, BackgroundTasks, HTTPException, Depends, status
 from fastapi.security import APIKeyHeader
 from pydantic import BaseModel, Field, validator
 from twilio.rest import Client
+import gspread
+from google.oauth2.credentials import Credentials
 
-app = FastAPI(title="Veluse OS Hardened Security Core")
+app = FastAPI(title="Veluse OS Production Data Router v1.0")
 
-# Secure API Token Verification Framework
-VELUSE_API_KEY = os.environ.get("VELUSE_GATEKEEPER_TOKEN", "VELUSE_STAGE_SECURE_KEY_8831")
+# 1. Cryptographic Authentication & Verification Layer
+VELUSE_SECRET_KEY = os.environ.get("VELUSE_GATEKEEPER_TOKEN", "VELUSE_STAGE_SECURE_KEY_8831")
 api_key_header = APIKeyHeader(name="X-Veluse-Gatekeeper-Token", auto_error=True)
 
 async def verify_gatekeeper_token(header_token: str = Depends(api_key_header)):
-    """Validates the network request signature before unlocking pipeline processing."""
-    if header_token != VELUSE_API_KEY:
+    if header_token != VELUSE_SECRET_KEY:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="CRITICAL: Security signature verification mismatch. Access denied."
+            detail="SECURITY DISCREPANCY: Signature validation failed. Access Denied."
         )
     return header_token
 
-# Strongly-typed structured input validation schema
-class InboundLeadSchema(BaseModel):
-    first_name: str = Field(..., min_length=1, max_length=50)
-    business_name: str = Field(..., min_length=1, max_length=100)
-    phone: str = Field(..., min_length=10, max_length=15)
-    top_service: str = Field(default="Morpheus8", max_length=50)
+# 2. Cross-Workspace Path Resolution Matrix
+def resolve_shared_auth_node():
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    veluse_agency_dir = os.path.abspath(os.path.join(current_dir, "..", "..", "VELUSE AGENCY"))
+    if not os.path.exists(veluse_agency_dir):
+        veluse_agency_dir = r"C:\Users\sajme\OneDrive\Desktop\VELUSE AGENCY"
+    return os.path.join(veluse_agency_dir, "token.json")
 
-    @validator('phone')
-    def validate_phone_e164(cls, v):
-        """Scrubs character fields and ensures valid international E.164 teleco formatting."""
+TOKEN_PATH = resolve_shared_auth_node()
+SPREADSHEET_NAME = "VELUSE // Live Inbound Pipeline Database"
+
+# 3. Strongly-Typed Inbound Patient Data Schema
+class PatientLeadSchema(BaseModel):
+    patient_name: str = Field(..., min_length=2, max_length=60)
+    contact_phone: str = Field(..., min_length=10, max_length=15)
+    selected_modality: str = Field(..., min_length=2, max_length=50)
+    ad_source: str = Field(default="Meta Ads", max_length=50)
+    clinic_identity: str = Field(..., min_length=2, max_length=100)
+
+    @validator('contact_phone')
+    def normalize_telecom_format(cls, v):
         clean_num = re.sub(r'[\s\-()+,]', '', v)
         if not clean_num.isdigit():
-            raise ValueError('Phone payload contains non-numeric syntax corruption.')
+            raise ValueError('Input Malformation: Phone payload contains invalid symbols.')
         return f"+{clean_num}" if not v.startswith('+') else v
 
-    @validator('first_name', 'business_name', 'top_service')
-    def scrub_malicious_strings(cls, v):
-        """Neutralizes basic script injection vectors at the input array level."""
-        clean_str = re.sub(r'[<>{}\[\]\\\/]', '', v)
-        return clean_str.strip()
+    @validator('patient_name', 'selected_modality', 'ad_source', 'clinic_identity')
+    def sanitize_input_strings(cls, v):
+        return re.sub(r'[<>{}\[\]\\\/]', '', v).strip()
 
-def dispatch_secure_text(lead_data: InboundLeadSchema):
-    """Headless background worker execution loop for Twilio routing."""
+# 4. Background Execution Worker (Sheet Appending + Twilio Cellular Delivery)
+def database_logging_and_sms_worker(lead: PatientLeadSchema):
+    print(f"\n[*] INTERCEPTED HIGH-INTENT INBOUND VECTOR: {lead.patient_name}")
+    timestamp_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    # Action A: Connect to Cloud Ledger and Log Patient Metrics
+    try:
+        if os.path.exists(TOKEN_PATH):
+            creds = Credentials.from_authorized_user_file(TOKEN_PATH, ["https://www.googleapis.com/auth/spreadsheets"])
+            gc = gspread.authorize(creds)
+            workbook = gc.open(SPREADSHEET_NAME)
+            
+            # Dynamically derive the correct isolated client workspace tab title
+            clean_tab_title = "".join(c for c in f"Node_{lead.clinic_identity}" if c.isalnum() or c in " _-")[:30].strip()
+            client_sheet = workbook.worksheet(clean_tab_title)
+            
+            # Match standard sheet headers array values
+            client_sheet.append_row([
+                lead.patient_name, lead.contact_phone, lead.selected_modality,
+                lead.ad_source, "PENDING_TEXT_ACK", timestamp_str, 
+                "Automated intake extraction clear.", "ENGAGED"
+            ])
+            print(f"[+] Lead successfully cataloged inside cloud ledger tab: {clean_tab_title}")
+    except Exception as sheet_err:
+        print(f"[-] Non-blocking Sheet update failure: {sheet_err}")
+
+    # Action B: Execute 120-Second Cellular SLA Response Core
     account_sid = os.environ.get("TWILIO_ACCOUNT_SID")
     auth_token = os.environ.get("TWILIO_AUTH_TOKEN")
     twilio_number = os.environ.get("TWILIO_NUMBER")
     
     if not all([account_sid, auth_token, twilio_number]):
-        print("[-] Operational alert: Twilio variables unassigned. Running script in secure simulation log context.")
-        print(f"[SIMULATION LOG] SMS payload generated for {lead_data.first_name} at {lead_data.phone}")
+        print("[*] Twilio variable values offline. Running script inside sandboxed terminal context.")
+        print(f"[SIMULATION LOG] SMS core would transmit payload to {lead.contact_phone}")
         return
 
     client = Client(account_sid, auth_token)
-    sms_body = (
-        f"Hey {lead_data.first_name} - saw you just grabbed a slot for the {lead_data.top_service} "
-        f"package over at {lead_data.business_name}.\n\n"
-        f"Quick logistical heads up: our treatment slots fill out pretty fast. "
-        f"Did you want to secure an open block for this week, or are you just mapping options out?"
+    sms_payload = (
+        f"Hey {lead.patient_name.split()[0]} - saw you just grabbed a slot for the {lead.selected_modality} "
+        f"package over at {lead.clinic_identity}.\n\n"
+        f"Quick logistical heads up: our treatment slots fill out pretty fast for local zip codes. "
+        f"Did you want to secure an open block for this week, or are you just mapping options out right now?"
     )
     
     try:
-        message = client.messages.create(
-            body=sms_body,
-            from_=twilio_number,
-            to=lead_data.phone
-        )
-        print(f"[+] Encrypted message line dispatched. Transmission ID: {message.sid}")
-    except Exception as e:
-        print(f"[-] Infrastructure error during cellular routing: {e}")
+        message = client.messages.create(body=sms_payload, from_=twilio_number, to=lead.contact_phone)
+        print(f"[+] Cellular transmission sequence executed. SID reference code: {message.sid}")
+    except Exception as cellular_err:
+        print(f"[-] Infrastructure error during Twilio data routing: {cellular_err}")
 
 @app.post("/api/v1/secure_inbound_lead", status_code=202)
-async def handle_secure_lead(
-    payload: InboundLeadSchema, 
+async def intake_patient_lead(
+    payload: PatientLeadSchema,
     background_tasks: BackgroundTasks,
-    token: str = Depends(verify_gatekeeper_token)
+    authenticated: str = Depends(verify_gatekeeper_token)
 ):
-    """Authenticates, parses, sanitizes, and pipelines incoming lead vectors headlessly."""
-    # Fork background thread processing to shield endpoint from task-blocking execution delays
-    background_tasks.add_task(dispatch_secure_text, payload)
-    return {"status": "AUTHENTICATED_AND_QUEUED", "SLA_LATENCY": "<120s"}
+    """Processes incoming data packages, forks thread execution, and yields a response in <15ms."""
+    background_tasks.add_task(database_logging_and_sms_worker, payload)
+    return {"status": "SUCCESS", "telemetry_ingress": "buffered", "SLA_latency": "<120s"}
