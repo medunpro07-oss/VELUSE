@@ -21,12 +21,27 @@ def authenticate_workspace():
         creds = Credentials.from_authorized_user_file('token.json', SCOPES)
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
+            try:
+                creds.refresh(Request())
+            except Exception as e:
+                print(f"[*] Token refresh failed: {e}. Restarting OAuth flow...")
+                flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
+                creds = flow.run_local_server(
+                    host='127.0.0.1',
+                    port=8080,
+                    open_browser=True,
+                    authorization_prompt_message='[*] Visit the link to authorize the Veluse Agency pipeline: {url}'
+                )
         else:
             flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
-            creds = flow.run_local_server(host='127.0.0.1', port=8080, open_browser=True)
-        with open('token.json', 'w') as token:
-            token.write(creds.to_json())
+            creds = flow.run_local_server(
+                host='127.0.0.1',
+                port=8080,
+                open_browser=True,
+                authorization_prompt_message='[*] Visit the link to authorize the Veluse Agency pipeline: {url}'
+            )
+        with open('token.json', 'w') as token_file:
+            token_file.write(creds.to_json())
     return creds
 
 def send_email(gmail_service, to_email, subject, body_html):
