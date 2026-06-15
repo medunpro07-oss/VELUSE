@@ -1,0 +1,21 @@
+# Environment & Secrets
+.env
+.env.*
+
+# Google OAuth credentials & tokens
+*.json
+credentials.json
+token.json
+token_mgmt.json
+
+# Local Python files
+__pycache__/
+*.pyc
+*.pyo
+core/__pycache__/
+
+# Lead CSV data files
+*.csv
+database/*.csv
+veluse_medspa_leads.csv
+veluse_medspa_leads_v3.csv

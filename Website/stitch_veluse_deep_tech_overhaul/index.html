@@ -203,14 +203,14 @@
   </style>
 </head>
 <body class="antialiased bg-void-black text-white font-mono text-[13px]">
-<div class="bg-void-black bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-neon-indigo/[0.12] via-void-black to-void-black md:bg-none" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; overflow: hidden;">
-<div id="veluse-telemetry" class="hidden md:block" style="position: absolute; bottom: 24px; right: 24px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #06B6D4; opacity: 0.35; line-height: 1.6; text-align: right; letter-spacing: 0.05em; z-index: 10;">
+<div style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; overflow: hidden; background: #050508;">
+<div id="veluse-telemetry" style="position: absolute; bottom: 24px; right: 24px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #06B6D4; opacity: 0.35; line-height: 1.6; text-align: right; letter-spacing: 0.05em; z-index: 10;">
         SYS_NODE // VELUSE_CORE_ACTIVE<br/>
         CURS_COORD_X: <span id="tele-x">0000</span> px<br/>
         CURS_COORD_Y: <span id="tele-y">0000</span> px<br/>
         MATRIX_VELOCITY: <span id="tele-v">0.00</span> nodes/s
     </div>
-<canvas id="telemetryCanvas" class="block opacity-50 scale-95 blur-[0.3px] pointer-events-none mix-blend-screen md:opacity-75 md:scale-100 md:blur-none md:pointer-events-auto" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></canvas>
+<canvas id="telemetryCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block;"></canvas>
 </div>
 <!-- BEGIN: Navigation -->
 <nav class="fixed top-0 left-0 w-full z-[9999] bg-transparent border-b border-transparent px-6 md:px-10 py-4 flex justify-between items-center h-24" id="main-nav">
@@ -236,7 +236,7 @@
 <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(79,70,229,0.08),transparent_70%)]"></div>
 <div class="z-10 max-w-7xl">
 <div class="entrance-anim inline-block border-l-2 border-neon-indigo pl-4 mb-8">
-<span class="font-mono text-cyan-400/80 text-[13px] uppercase tracking-[0.25em]">Precision Engineering</span>
+<span class="font-mono text-neon-indigo text-[13px] uppercase tracking-[0.4em]">Precision Engineering</span>
 </div>
 <h1 class="entrance-anim stagger-1 font-sans font-black text-white leading-[1.0] md:leading-[0.95] tracking-tightest mb-8 text-[32px] sm:text-[48px] md:text-[64px] lg:text-[80px] xl:text-[84px] xl:max-w-6xl">
       WE DON'T RUN CAMPAIGNS.<br/>
@@ -601,19 +601,17 @@ let height = canvas.height = window.innerHeight;
 const mouse = { x: null, y: null, targetX: null, targetY: null, radius: 250, speed: 0 };
 const gridNodes = [];
 const pulses = [];
-const isMobile = window.innerWidth < 768;
-const connectionDistance = isMobile ? 120 : 240;
-const numNodes = isMobile ? 25 : 140;
-const speedFactor = isMobile ? 0.35 : 0.8;
+const connectionDistance = 240;
+const numNodes = 140;
 
 for (let i = 0; i < numNodes; i++) {
     gridNodes.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * speedFactor,
-        vy: (Math.random() - 0.5) * speedFactor,
-        baseVx: (Math.random() - 0.5) * speedFactor,
-        baseVy: (Math.random() - 0.5) * speedFactor
+        vx: (Math.random() - 0.5) * 0.8,
+        vy: (Math.random() - 0.5) * 0.8,
+        baseVx: (Math.random() - 0.5) * 0.8,
+        baseVy: (Math.random() - 0.5) * 0.8
     });
 }
 
@@ -679,7 +677,7 @@ function animateGridEngine() {
         if (node.y < -50) node.y = height + 50;
         if (node.y > height + 50) node.y = -50;
 
-        ctx.fillStyle = isMobile ? 'rgba(0, 240, 255, 0.85)' : 'rgba(79, 70, 229, 0.55)'; 
+        ctx.fillStyle = 'rgba(79, 70, 229, 0.55)'; 
         if (mouse.x !== null && Math.hypot(node.x - mouse.x, node.y - mouse.y) < mouse.radius) {
             ctx.fillStyle = 'rgba(0, 240, 255, 0.85)';
         }
@@ -693,8 +691,8 @@ function animateGridEngine() {
             const n2 = gridNodes[j];
             const dist = Math.hypot(n1.x - n2.x, n1.y - n2.y);
             if (dist < connectionDistance) {
-                const alpha = (1 - (dist / connectionDistance)) * (isMobile ? 0.65 : 0.35);
-                ctx.strokeStyle = isMobile ? `rgba(0, 240, 255, ${alpha})` : `rgba(79, 70, 229, ${alpha})`;
+                const alpha = (1 - (dist / connectionDistance)) * 0.35;
+                ctx.strokeStyle = `rgba(79, 70, 229, ${alpha})`;
                 ctx.beginPath();
                 ctx.moveTo(n1.x, n1.y);
                 ctx.lineTo(n2.x, n2.y);
@@ -709,7 +707,7 @@ function animateGridEngine() {
         if (neighbors.length > 0) {
             pulses.push({
                 from: startNode, to: neighbors[Math.floor(Math.random() * neighbors.length)], progress: 0,
-                speed: 0.04 + Math.random() * 0.04, color: isMobile ? 'rgba(0, 240, 255, 0.95)' : (Math.random() > 0.3 ? 'rgba(79, 70, 229, 0.95)' : 'rgba(0, 240, 255, 0.95)')
+                speed: 0.04 + Math.random() * 0.04, color: Math.random() > 0.3 ? 'rgba(79, 70, 229, 0.95)' : 'rgba(0, 240, 255, 0.95)'
             });
         }
     }
