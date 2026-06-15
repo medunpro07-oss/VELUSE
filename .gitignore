@@ -28,6 +28,7 @@ proposal/
 
 # Local pricing manifest
 pricing_manifest.html
+pricing_manifest.pdf
 
 # Helper Python scripts
 enable_apis.py
