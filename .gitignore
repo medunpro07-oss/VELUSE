@@ -21,6 +21,7 @@ requirements.txt
 database/
 
 # Local non-public folders
+public/
 knowledge base/
 logos/
 proposal/
