@@ -26,6 +26,9 @@ knowledge base/
 logos/
 proposal/
 
+# Local pricing manifest
+pricing_manifest.html
+
 # Helper Python scripts
 enable_apis.py
 get_sheet_preview.py
