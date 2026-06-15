@@ -13,9 +13,21 @@ __pycache__/
 *.pyc
 *.pyo
 core/__pycache__/
+core/
+requirements.txt
 
 # Lead CSV data files
 *.csv
-database/*.csv
-veluse_medspa_leads.csv
-veluse_medspa_leads_v3.csv
+database/
+
+# Local non-public folders
+knowledge base/
+logos/
+proposal/
+
+# Helper Python scripts
+enable_apis.py
+get_sheet_preview.py
+inspect_sheet.py
+veluse_medspa_scraper.py
+donna_outbound_daemon.py
