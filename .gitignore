@@ -36,3 +36,7 @@ get_sheet_preview.py
 inspect_sheet.py
 veluse_medspa_scraper.py
 donna_outbound_daemon.py
+
+# Local outbound configuration & guides
+OutBound/
+
