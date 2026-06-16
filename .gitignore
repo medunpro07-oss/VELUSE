@@ -40,3 +40,9 @@ donna_outbound_daemon.py
 # Local outbound configuration & guides
 OutBound/
 
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
