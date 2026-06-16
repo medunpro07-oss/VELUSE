@@ -40,3 +40,5 @@ donna_outbound_daemon.py
 # Local outbound configuration & guides
 OutBound/
 
+# Broken mockup - removed from live site
+sop.html
