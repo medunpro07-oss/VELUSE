@@ -12,11 +12,11 @@ Open `http://127.0.0.1:4173`. Deploy the root directory through the existing sta
 
 ## Design and motion
 
-The design keeps Veluse's dark surfaces, indigo/cyan accents, engineering motif, and Precision Revenue Architecture positioning. Warm neutral content sections, editorial typography, and restrained spacing make the services easier to scan.
+The design follows the supplied Veluse proposal cover: black and deep navy surfaces, saturated indigo/cyan accents, angular framing, and bold typography. Every logo uses the original metallic ribbon V from `favicon.png`; the source favicon is unchanged. The site contains no light panels, pastel section backgrounds, or serif display type.
 
-- SVG acquisition map with animated orbits and signal paths.
-- Five selectable growth phases with a transitioning layered illustration.
-- Lightweight service animations and an explicitly illustrative OS workspace.
+- The original neural-network motif: 140 drifting desktop nodes (42 on mobile), proximity connections, firing pulses, brief node flashes, and pointer repulsion. Coordinates are neither stored nor transmitted.
+- Five selectable growth phases with an interactive architecture diagram.
+- Animated acquisition schematics and an explicitly illustrative OS workflow.
 - Progressive scroll reveals; content remains visible without JavaScript.
 - Motion pause/play control, reduced-motion preferences, and background pausing.
 - Mobile navigation, native modal dialogs, keyboard focus return, and required form fields.
@@ -37,10 +37,11 @@ With Node.js available:
 
 ```sh
 node --check assets/site.js
-node --test tests/contact.test.cjs
+node --check assets/neural.js
+node --test tests/*.test.cjs
 git diff --check
 ```
 
-The seven isolated checks exercise the intake contract, truthful opaque-response status, rejection/retry, invalid input, duplicate submissions, motion pause persistence, and reduced-motion preference. They never make a network request.
+Eleven isolated checks exercise the intake contract, truthful opaque-response status, rejection/retry, invalid input, duplicate submissions, motion pause persistence, reduced-motion preference, renderer resolution caps, and cancellation/resumption of the neural loop. They never make a network request.
 
 Browser verification covers the mobile navigation, all five phase choices, required-field validation, Escape closing and focus return, both legal dialogs, motion control, and layouts at 320, 375, 390, 768, 1024, and 1440 pixels. Backend delivery and production deployment require separate verification.
