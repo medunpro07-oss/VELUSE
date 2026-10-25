@@ -52,34 +52,6 @@ document.addEventListener('visibilitychange', updateMotion);
 reducedMotion.addEventListener('change', updateMotion);
 updateMotion();
 
-const phases = [
-  { name: 'Foundation', title: 'A stronger starting point.', description: 'We audit your customer journey, define your offer, and connect your tracking and tools. A considered foundation for everything that follows.', tags: ['Systems audit', 'Measurement', 'Offer alignment'] },
-  { name: 'Awareness', title: 'A message worth noticing.', description: 'We clarify your positioning and bring your offer to the right audience. Every channel begins with a shared understanding of who you serve and why it matters.', tags: ['Brand positioning', 'Creative strategy', 'Audience research'] },
-  { name: 'Acquisition', title: 'Attention with a next step.', description: 'We connect targeted campaigns to focused landing pages and a clear qualification journey. Your team sees the context behind each new inquiry.', tags: ['Paid campaigns', 'Landing pages', 'Lead qualification'] },
-  { name: 'Nurturing', title: 'Keep the connection alive.', description: 'We design follow-up around your customer journey, with thoughtful messages and clear handoffs. Inquiries move toward a conversation instead of getting lost.', tags: ['Follow-up flows', 'Lead routing', 'Booking journey'] },
-  { name: 'Scaling', title: 'Build on what you learn.', description: 'We review conversion data, find friction, and refine the system. Expansion follows evidence, with your team’s capacity and customer experience in view.', tags: ['Conversion review', 'Budget planning', 'Continuous improvement'] }
-];
-document.querySelectorAll('[data-phase]').forEach(button => {
-  button.addEventListener('click', () => {
-    const index = Number(button.dataset.phase);
-    const phase = phases[index];
-    document.querySelectorAll('[data-phase]').forEach(item => {
-      const selected = item === button;
-      item.classList.toggle('active', selected);
-      item.setAttribute('aria-expanded', String(selected));
-    });
-    document.querySelector('.phase-art').dataset.step = String(index);
-    document.querySelector('#phase-kicker').textContent = `Phase 0${index + 1} / ${phase.name}`;
-    document.querySelector('#phase-title').textContent = phase.title;
-    document.querySelector('#phase-description').textContent = phase.description;
-    document.querySelector('#phase-tags').replaceChildren(...phase.tags.map(tag => {
-      const span = document.createElement('span');
-      span.textContent = tag;
-      return span;
-    }));
-  });
-});
-
 const contactDialog = document.querySelector('#contact-dialog');
 const legalDialog = document.querySelector('#legal-dialog');
 const form = document.querySelector('#contact-form');
