@@ -1,0 +1,20 @@
+[TERMS OF SERVICE]
+v2.0.1-stable
+
+1. SYSTEM LICENSE
+Access to the Veluse Patient Acquisition System is granted under strict SLA constraints. Unauthorized node-scraping is blocked.
+
+2. RUNTIME STABILITY
+While the telemetry engine runs at 60 FPS, user interface frame rates are dependent on local browser GPU acceleration.
+
+3. CLIENT LIABILITY
+The client assumes full responsibility for local clinical marketing compliance under active medical board rules.
+
+4. AUTOMATIC TERMINATION
+Failure to maintain API gateway credentials will trigger immediate pipeline quarantine.
+
+5. INTELLECTUAL PROPERTY
+All custom telemetry canvases, UI templates, and machine learning pipeline modules remain the exclusive property of Veluse.
+
+6. SERVICE LEVELS
+We aim for 99.9% uptime on active patient routing scripts. Maintenance windows are announced 24 hours in advance.
