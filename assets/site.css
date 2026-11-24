@@ -1,7 +1,7 @@
 @charset "UTF-8";
 :root {
-  --indigo: #4f46e5;
-  --cyan: #06b6d4;
+  --accent: #d9a441;
+  --cyan: #d9a441;
   --ease: cubic-bezier(.2,1,.3,1);
   color-scheme: dark;
   font-synthesis: none
@@ -65,7 +65,7 @@ svg {
   display: block
 }
 ::selection {
-  background: #4f46e5;
+  background: #d9a441;
   color: white
 }
 :focus-visible {
@@ -92,8 +92,8 @@ header, main, footer {
   min-height: 54px;
   font-size: 12px;
   padding: 18px 23px;
-  border: 1px solid #3e3b66;
-  background: #101222;
+  border: 1px solid #56472c;
+  background: #121312;
   position: relative;
   transition: transform .35s var(--ease),background .25s,border-color .25s;
   letter-spacing: -.01em
@@ -105,8 +105,8 @@ header, main, footer {
 }
 .button:hover {
   transform: translateY(-3px);
-  border-color: #7268ff;
-  background: #211c4e
+  border-color: #d9a441;
+  background: #202120
 }
 .button:hover span {
   transform: translate(2px,-2px)
@@ -133,7 +133,7 @@ header, main, footer {
 .text-link {
   display: inline-flex;
   align-items: center;
-  color: #c7cbda;
+  color: #c7cfc7;
   line-height: 1.5
 }
 .text-link:hover {
@@ -146,7 +146,7 @@ header, main, footer {
   position: fixed;
   top: -100px;
   left: 15px;
-  background: #101222;
+  background: #121312;
   padding: 14px 20px;
   z-index: 100
 }
@@ -203,7 +203,7 @@ header, main, footer {
   color: var(--text)
 }
 .site-header nav a span {
-  color: #716d94
+  color: #6e736e
 }
 .menu-toggle {
   display: none
@@ -222,7 +222,7 @@ header, main, footer {
   min-height: 40px
 }
 .motion-toggle:hover {
-  color: #eceef9
+  color: #eaf3ea
 }
 .motion-toggle:disabled {
   cursor: default;
@@ -232,7 +232,7 @@ header, main, footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #282b3d
+  border-bottom: 1px solid #2b2c2b
 }
 .section-heading {
   display: flex;
@@ -255,7 +255,7 @@ header, main, footer {
   overflow: hidden
 }
 .system-module+.system-module {
-  border-left: 1px solid #2a2c3f
+  border-left: 1px solid #2c2e2c
 }
 .system-module::after {
   content: '';
@@ -264,7 +264,7 @@ header, main, footer {
   left: 0;
   right: 0;
   height: 2px;
-  background: var(--indigo);
+  background: var(--accent);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform .6s var(--ease)
@@ -302,7 +302,7 @@ header, main, footer {
   max-width: 300px
 }
 .module-footer {
-  border-top: 1px solid #24273a;
+  border-top: 1px solid #272827;
   padding: 18px 0;
   margin-top: 29px
 }
@@ -310,7 +310,7 @@ header, main, footer {
   font-size: clamp(35px,4.1vw,60px)
 }
 .os-section {
-  border-block: 1px solid #25253c;
+  border-block: 1px solid #262726;
   position: relative;
   overflow: hidden
 }
@@ -334,7 +334,7 @@ header, main, footer {
 }
 .os-lockup-suffix {
   margin-left: 10px;
-  color: #756bff;
+  color: #d9a441;
   font-weight: 400
 }
 .os-copy>p {
@@ -345,7 +345,7 @@ header, main, footer {
   margin-top: 30px
 }
 .os-console {
-  border: 1px solid #393454;
+  border: 1px solid #4c3f27;
   position: relative;
   min-width: 0;
   transition: transform .7s var(--ease)
@@ -354,7 +354,7 @@ header, main, footer {
   display: flex;
   align-items: center;
   gap: 10px;
-  border-bottom: 1px solid #292c42
+  border-bottom: 1px solid #2c2e2c
 }
 .flow-sources {
   display: flex;
@@ -362,7 +362,7 @@ header, main, footer {
   margin: 28px 25px 0
 }
 .flow-sources>span {
-  border: 1px solid #34304f;
+  border: 1px solid #323432;
   text-align: center;
   flex: 1
 }
@@ -370,8 +370,8 @@ header, main, footer {
   height: 30px;
   margin-inline: 26%;
   position: relative;
-  border-inline: 1px solid #514182;
-  border-bottom: 1px solid #514182
+  border-inline: 1px solid #645333;
+  border-bottom: 1px solid #645333
 }
 .flow-join::after {
   content: '';
@@ -380,7 +380,7 @@ header, main, footer {
   top: 100%;
   height: 20px;
   width: 1px;
-  background: #6551bd
+  background: #d9a441
 }
 .flow-station {
   margin: 20px 24px 0;
@@ -388,7 +388,7 @@ header, main, footer {
   display: flex;
   align-items: center;
   gap: 14px;
-  border: 1px solid #302e47;
+  border: 1px solid #2f312f;
   position: relative
 }
 .flow-station+.flow-station::before {
@@ -398,7 +398,7 @@ header, main, footer {
   bottom: 100%;
   left: 50%;
   width: 1px;
-  background: #6551bd
+  background: #d9a441
 }
 .station-icon {
   line-height: 1
@@ -414,13 +414,13 @@ header, main, footer {
 }
 .flow-station>span:last-child {
   margin-left: auto;
-  color: #6b6196
+  color: #8d7448
 }
 .flow-station:last-of-type {
-  border-color: #4e3e90
+  border-color: #625132
 }
 .flow-station .station-check {
-  color: #06b6d4!important
+  color: #d9a441!important
 }
 .console-footer {
   display: flex;
@@ -429,7 +429,7 @@ header, main, footer {
   gap: 15px
 }
 .console-footer>span {
-  color: #797395
+  color: #747974
 }
 .roadmap .section-heading h2 {
   font-size: clamp(33px,3.7vw,54px)
@@ -443,7 +443,7 @@ header, main, footer {
   margin: 65px 0 0
 }
 .roadmap-grid li {
-  border-top: 1px solid #343047;
+  border-top: 1px solid #323332;
   padding-top: 20px;
   position: relative
 }
@@ -454,7 +454,7 @@ header, main, footer {
   left: 0;
   width: 5px;
   height: 5px;
-  background: #6557ee
+  background: #d9a441
 }
 .roadmap-number {
   letter-spacing: -.09em;
@@ -497,7 +497,7 @@ header, main, footer {
 }
 .site-footer {
   padding-block: 44px 25px;
-  border-top: 1px solid #292738
+  border-top: 1px solid #282928
 }
 .footer-top {
   display: flex;
@@ -515,7 +515,7 @@ header, main, footer {
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  border-top: 1px solid #262839;
+  border-top: 1px solid #282a28;
   padding-top: 23px
 }
 .footer-bottom div {
@@ -529,19 +529,19 @@ header, main, footer {
   padding: 0
 }
 .footer-bottom a:hover, .footer-bottom button:hover {
-  color: #e1e3f1
+  color: #dfe8df
 }
 dialog {
-  background: #0d0f1c;
-  color: #eef0f6;
-  border: 1px solid #40385c;
+  background: #0f100f;
+  color: #ebf4eb;
+  border: 1px solid #53442a;
   padding: 0;
   width: min(590px,calc(100% - 32px));
   max-height: calc(100dvh - 40px);
   box-shadow: 0 30px 100px #0009
 }
 dialog::backdrop {
-  background: #03040bc9;
+  background: #040404c9;
   backdrop-filter: blur(8px)
 }
 dialog[open] {
@@ -561,7 +561,7 @@ body:has(dialog[open]) {
   width: 40px;
   height: 40px;
   background: none;
-  color: #9da2b8;
+  color: #9fa59f;
   font-size: 28px;
   line-height: 1
 }
@@ -571,7 +571,7 @@ body:has(dialog[open]) {
   letter-spacing: -.055em
 }
 .dialog-intro {
-  color: #969eb7;
+  color: #9ba19b;
   max-width: 365px;
   margin-top: 18px
 }
@@ -581,7 +581,7 @@ form {
 label {
   display: block;
   font-size: 11px;
-  color: #b0b6cd;
+  color: #b3bab3;
   margin-bottom: 16px
 }
 input, select, textarea {
@@ -589,9 +589,9 @@ input, select, textarea {
   width: 100%;
   display: block;
   margin-top: 6px;
-  background: #080b16;
-  border: 1px solid #34374f;
-  color: #e9ecf7;
+  background: #0b0b0b;
+  border: 1px solid #373937;
+  color: #e7f0e7;
   padding: 11px 12px;
   border-radius: 0;
   outline-offset: 2px
@@ -600,7 +600,7 @@ textarea {
   resize: vertical
 }
 input::placeholder, textarea::placeholder {
-  color: #616d8a
+  color: #957b4c
 }
 .form-row {
   display: grid;
@@ -609,18 +609,18 @@ input::placeholder, textarea::placeholder {
 }
 .form-note {
   line-height: 1.8;
-  color: #77829f;
+  color: #7f847f;
   margin-bottom: 18px
 }
 form .button {
   width: 100%;
-  background: #4f46e5;
-  border-color: #6158ec;
+  background: #d9a441;
+  border-color: #d9a441;
   color: white
 }
 #form-status {
   font-size: 12px;
-  color: #b2a9ff;
+  color: #d9a441;
   line-height: 1.8;
   margin-top: 16px
 }
@@ -629,7 +629,7 @@ form .button {
 }
 .contact-alternative {
   text-align: center;
-  color: #848eac;
+  color: #8b918b;
   margin-top: 20px
 }
 .contact-alternative a {
@@ -638,7 +638,7 @@ form .button {
 }
 #legal-body {
   font: 12px/1.85 Arial,sans-serif;
-  color: #9da5c0;
+  color: #a2a8a2;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
   margin: 28px 0 0
@@ -784,7 +784,7 @@ form .button {
   .menu-toggle span {
     width: 22px;
     height: 1px;
-    background: #b0b5cc;
+    background: #b2b9b2;
     display: block;
     transition: transform .3s
   }
@@ -802,7 +802,7 @@ form .button {
     right: 0;
     margin: 0;
     padding: 25px 20px;
-    border-bottom: 1px solid #32364f;
+    border-bottom: 1px solid #363836;
     flex-direction: column;
     align-items: flex-start;
     gap: 25px
@@ -811,7 +811,7 @@ form .button {
     display: flex
   }
   .hero {
-    background: linear-gradient(180deg,#06070bd9 5%,#06070b70 55%,#17115a55)
+    background: linear-gradient(180deg,#070707d9 5%,#07070770 55%,#201b1055)
   }
   .hero h1 {
     letter-spacing: -.065em
@@ -980,16 +980,16 @@ form .button {
 }
 /* Brand palette and editorial hierarchy. */
 :root {
-  --bg: #03040b;
-  --surface: #060812;
-  --text: #edf0f7;
-  --muted: #9b9fb2;
-  --line: #202438;
-  --electric: #6775df;
+  --bg: #040404;
+  --surface: #080808;
+  --text: #ebf4eb;
+  --muted: #9ca29c;
+  --line: #242524;
+  --electric: #d9a441;
   font-family: Arial,Helvetica,sans-serif
 }
 .neural-backdrop {
-  background: #03040b
+  background: #040404
 }
 .neural-backdrop canvas {
   position: absolute;
@@ -1017,7 +1017,7 @@ form .button {
   animation: flow-fall 38s ease-in-out infinite alternate
 }
 .site-header {
-  background: #03040ae6;
+  background: #040404e6;
   border-bottom: 1px solid #ffffff08
 }
 .wordmark {
@@ -1026,23 +1026,23 @@ form .button {
 }
 .site-header nav a {
   font-size: 13px;
-  color: #a8adbf
+  color: #aab0aa
 }
 .header-cta {
   font-size: 12px;
-  background: #111528;
-  border-color: #292f4a
+  background: #151615;
+  border-color: #2f312f
 }
 .button {
   font-weight: 500;
   border-radius: 7px
 }
 .button-primary {
-  background: #454bcb;
-  border-color: #535bdc
+  background: #d9a441;
+  border-color: #d9a441
 }
 .button-primary:hover {
-  background: #535ade
+  background: #d9a441
 }
 .button-primary::after {
   display: none
@@ -1052,11 +1052,11 @@ form .button {
   gap: 15px
 }
 .text-link span {
-  color: #939fdf
+  color: #d9a441
 }
 .hero {
   min-height: calc(100svh - 90px);
-  background: linear-gradient(90deg,#030409f5 8%,#030409db 43%,#03040980 80%),linear-gradient(0deg,#030409cc,transparent 60%)
+  background: linear-gradient(90deg,#040404f5 8%,#040404db 43%,#04040480 80%),linear-gradient(0deg,#040404cc,transparent 60%)
 }
 .hero h1 {
   font-size: clamp(76px,8.2vw,122px);
@@ -1066,24 +1066,24 @@ form .button {
 }
 .motion-toggle {
   font: 11px Arial,Helvetica,sans-serif;
-  color: #8e97b2
+  color: #949a94
 }
 .section-pad {
   padding-block: 100px
 }
 .architecture {
-  background: linear-gradient(#050711bd,#04060dd9);
+  background: linear-gradient(#070707bd,#060606d9);
   border-bottom: 0
 }
 .protocol {
-  background: linear-gradient(#04060ce0,#04060c9e)
+  background: linear-gradient(#060606e0,#0606069e)
 }
 .os-section {
-  background: #050710d9;
-  border-color: #171d30
+  background: #070707d9;
+  border-color: #1d1e1d
 }
 .roadmap {
-  background: #05070dd9
+  background: #070707d9
 }
 .section-topline {
   padding-bottom: 0;
@@ -1093,7 +1093,7 @@ form .button {
   font: 14px/1.6 Arial,Helvetica,sans-serif;
   text-transform: none;
   letter-spacing: 0;
-  color: #8f9bc0;
+  color: #989e98;
   gap: 0
 }
 .section-heading {
@@ -1107,13 +1107,13 @@ form .button {
   line-height: 1.1
 }
 .muted-heading {
-  color: #818aa8
+  color: #878d87
 }
 .section-heading>p {
   max-width: 330px;
   font-size: 14px;
   line-height: 1.85;
-  color: #9ba4be
+  color: #a1a7a1
 }
 .system-grid {
   border: 0;
@@ -1131,7 +1131,7 @@ form .button {
   padding-right: 0
 }
 .system-module+.system-module {
-  border-color: #242b3f
+  border-color: #2a2c2a
 }
 .system-module::after {
   display: none
@@ -1139,16 +1139,16 @@ form .button {
 .module-top {
   font: 15px Arial,Helvetica,sans-serif;
   letter-spacing: 0;
-  color: #bdc5de;
+  color: #c1c9c1;
   gap: 14px
 }
 .module-top>span:first-child {
   font-size: 12px;
-  color: #677590
+  color: #9f8351
 }
 .module-top>span:last-child {
   margin-left: 0;
-  color: #bdc5de;
+  color: #c1c9c1;
   font-size: 15px
 }
 .system-schema {
@@ -1165,13 +1165,13 @@ form .button {
   font-size: 14px;
   line-height: 1.85;
   min-height: 106px;
-  color: #929db9
+  color: #9aa09a
 }
 .module-footer {
   font: 11px/1.8 Arial,Helvetica,sans-serif;
   letter-spacing: 0;
-  color: #697898;
-  border-top-color: #20283d;
+  color: #a38753;
+  border-top-color: #272927;
   padding-block: 18px
 }
 .os-copy h2 {
@@ -1182,7 +1182,7 @@ form .button {
 }
 .os-copy>p {
   font-size: 15px;
-  color: #a0abc4;
+  color: #a7aea7;
   max-width: 390px
 }
 .os-lockup {
@@ -1190,8 +1190,8 @@ form .button {
   letter-spacing: -.5px
 }
 .os-console {
-  border-color: #252d43;
-  background: #060b16bd;
+  border-color: #2c2e2c;
+  background: #0b0b0bbd;
   border-radius: 13px;
   transform: none;
   box-shadow: 0 25px 70px #0003;
@@ -1204,13 +1204,13 @@ form .button {
   font: 13px Arial,Helvetica,sans-serif;
   letter-spacing: 0;
   padding: 23px 26px;
-  color: #a6b2cd;
-  border-color: #20283d
+  color: #aeb5ae;
+  border-color: #272927
 }
 .console-top>span:last-child {
   margin-left: 0;
   font-size: 13px;
-  color: #a6b2cd
+  color: #aeb5ae
 }
 .flow-sources {
   gap: 18px;
@@ -1218,15 +1218,15 @@ form .button {
 }
 .flow-sources>span {
   font: 11px Arial,Helvetica,sans-serif;
-  background: #11162a;
-  border-color: #29334d;
+  background: #161716;
+  border-color: #323432;
   padding: 13px 12px;
   border-radius: 5px;
-  color: #a4b4d2
+  color: #afb6af
 }
 .flow-station {
-  background: #0a1020;
-  border-color: #242d46;
+  background: #101010;
+  border-color: #2c2e2c;
   border-radius: 6px;
   padding-block: 20px
 }
@@ -1236,7 +1236,7 @@ form .button {
 }
 .flow-station div>span {
   font-size: 10px;
-  color: #8294b6;
+  color: #d9a441;
   margin-top: 7px
 }
 .station-icon {
@@ -1244,12 +1244,12 @@ form .button {
   border: 0;
   background: none;
   padding: 6px;
-  color: #7b89c7
+  color: #d9a441
 }
 .console-footer {
   font: 11px/1.6 Arial,Helvetica,sans-serif;
   letter-spacing: 0;
-  color: #697d9e;
+  color: #a98b56;
   padding: 23px 26px
 }
 .roadmap-grid h3 {
@@ -1259,36 +1259,36 @@ form .button {
 }
 .roadmap-number {
   font-size: 65px;
-  color: #414b78;
+  color: #685635;
   font-weight: 400
 }
 .roadmap-grid p {
   font-size: 13px;
   line-height: 1.9;
-  color: #8e9cb7
+  color: #989e98
 }
 .roadmap-grid li {
-  border-color: #242d45
+  border-color: #2c2e2c
 }
 .roadmap-grid li::before {
   display: none
 }
 .contact-section {
-  background: linear-gradient(#05070dd9,#040713a3);
+  background: linear-gradient(#070707d9,#070707a3);
   padding-bottom: 85px
 }
 .contact-inner {
   border: 0;
   background: none;
   padding: 50px 0 0;
-  border-top: 1px solid #273149
+  border-top: 1px solid #303130
 }
 .contact-inner::before {
   display: none
 }
 .contact-top .eyebrow {
   font-size: 14px;
-  color: #8a9abc
+  color: #969c96
 }
 .contact-inner h2 {
   font-size: clamp(65px,8vw,114px);
@@ -1298,31 +1298,31 @@ form .button {
   margin-top: 36px
 }
 .title-period {
-  color: #6f80de
+  color: #d9a441
 }
 .contact-bottom p {
   font-size: 15px;
   line-height: 1.8;
-  color: #9daecb
+  color: #a9b0a9
 }
 .contact-bottom .button {
   padding: 20px 28px
 }
 .site-footer {
-  background: #03060dcc;
-  border-color: #1d263b
+  background: #060606cc;
+  border-color: #252625
 }
 .footer-top p {
   font-size: 12px;
-  color: #7185a8
+  color: #b4945c
 }
 .footer-top .text-link {
   font-size: 13px
 }
 .footer-bottom {
   font-size: 11px;
-  color: #6f81a1;
-  border-color: #1e293f
+  color: #af9059;
+  border-color: #272927
 }
 .dialog-content .eyebrow {
   font-size: 13px
@@ -1331,7 +1331,7 @@ form .button {
   font-weight: 500
 }
 .dialog-content h2 em {
-  color: #91a0df
+  color: #d9a441
 }
 .dialog-intro {
   font-size: 14px
@@ -1380,23 +1380,23 @@ form .button {
   justify-content: space-between;
   gap: 25px;
   font-size: 13px;
-  color: #a4b3d0;
+  color: #aeb5ae;
   padding: 20px 8px
 }
 .story-count {
-  color: #5f7296;
+  color: #9a7f4f;
   font-size: 12px
 }
 .story-meter {
   height: 1px;
-  background: #202b47;
+  background: #2a2b2a;
   margin-inline: 8px
 }
 .story-meter>span {
   display: block;
   width: calc(var(--story-progress)*100%);
   height: 1px;
-  background: linear-gradient(90deg,#4f46e5,#06b6d4)
+  background: linear-gradient(90deg,#d9a441,#d9a441)
 }
 .story-window {
   min-width: 0
@@ -1407,7 +1407,7 @@ form .button {
 .story-chapter {
   min-height: 510px;
   padding: 28px 0 90px;
-  border-top: 1px solid #26304a;
+  border-top: 1px solid #2f312f;
   position: relative
 }
 .chapter-number {
@@ -1416,12 +1416,12 @@ form .button {
   font-weight: 400;
   line-height: 1;
   letter-spacing: -.075em;
-  color: #576cba
+  color: #d9a441
 }
 .chapter-name {
   font-size: 16px;
   line-height: 1.4;
-  color: #899ddd;
+  color: #d9a441;
   margin-top: 24px
 }
 .story-chapter h3 {
@@ -1435,7 +1435,7 @@ form .button {
 .chapter-description {
   font-size: 16px;
   line-height: 1.8;
-  color: #a2afc8;
+  color: #abb1ab;
   margin-top: 24px;
   max-width: 465px
 }
@@ -1446,13 +1446,13 @@ form .button {
   flex-wrap: wrap;
   padding: 0;
   margin: 28px 0 0;
-  color: #647da3;
+  color: #a88a56;
   font-size: 12px
 }
 .chapter-tags li+li::before {
   content: '·';
   margin-right: 20px;
-  color: #435d88
+  color: #7c663f
 }
 .story-scene {
   opacity: 0;
@@ -1486,13 +1486,13 @@ form .button {
   opacity: clamp(.2,calc((var(--phase-progress) - var(--threshold))*4),1)
 }
 .journey-node circle {
-  fill: #060b1a;
-  stroke: #5763ac;
+  fill: #0b0b0b;
+  stroke: #d9a441;
   stroke-width: 1.5
 }
 .journey-node path {
   fill: none;
-  stroke: #06b6d4;
+  stroke: #d9a441;
   stroke-width: 1.5
 }
 .node-a {
@@ -1512,8 +1512,8 @@ form .button {
   transform: scaleY(clamp(.04,calc((var(--phase-progress) - var(--threshold))*2),1))
 }
 .scale-bar path {
-  fill: #131d4b;
-  stroke: #4d60aa;
+  fill: #1e1f1e;
+  stroke: #856e44;
   stroke-width: 1
 }
 .bar-a {
@@ -1684,10 +1684,10 @@ form .button {
 @media(max-width:760px) {
   .site-header {
     height: 75px;
-    background: #03040bb0
+    background: #040404b0
   }
   .site-header nav {
-    background: #060a18
+    background: #0a0a0a
   }
   .site-header nav a {
     font-size: 14px
@@ -1732,7 +1732,7 @@ form .button {
   }
   .system-module+.system-module {
     border-left: 0;
-    border-top: 1px solid #26304a
+    border-top: 1px solid #2f312f
   }
   .module-top {
     font-size: 15px
@@ -1769,7 +1769,7 @@ form .button {
     position: sticky;
     top: 0;
     height: clamp(210px,35svh,285px);
-    background: linear-gradient(#040713fa,#040713ed);
+    background: linear-gradient(#070707fa,#070707ed);
     z-index: 5;
     display: flex;
     flex-direction: column;

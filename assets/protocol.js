@@ -55,7 +55,7 @@
     stage.style.setProperty('--draw', quiet ? '1' : clamp(0.08 + local * 1.55).toFixed(4));
     story.style.setProperty('--story-progress', clamp(overall).toFixed(4));
     story.dataset.active = String(index);
-    document.documentElement.style.setProperty('--ambient-shift', quiet ? '0px' : `${(Math.sin(window.scrollY / 1800) * 35).toFixed(2)}px`);
+    document.documentElement.style.setProperty('--exit', quiet ? '0' : clamp(window.scrollY / window.innerHeight).toFixed(4));
     if (index !== activeIndex) {
       chapters.forEach((chapter, i) => chapter.classList.toggle('active', i === index));
       scenes.forEach((scene, i) => scene.classList.toggle('active', i === index));

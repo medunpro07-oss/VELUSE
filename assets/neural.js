@@ -24,8 +24,8 @@
     width = window.innerWidth;
     height = window.innerHeight;
     const mobile = width < 768;
-    const count = mobile ? 42 : 140;
-    connectionDistance = mobile ? 135 : Math.min(240, width * 0.19);
+    const count = mobile ? 72 : 210;
+    connectionDistance = mobile ? 100 : Math.min(189, width * 0.145);
     const ratio = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = Math.round(width * ratio);
     canvas.height = Math.round(height * ratio);
@@ -53,7 +53,7 @@
     if (!options.length) return;
     const to = options[Math.floor(Math.random() * options.length)];
     from.charge = 1;
-    pulses.push({ from, to, progress: 0, speed: 0.012 + Math.random() * 0.014, cyan: Math.random() < 0.32, hops });
+    pulses.push({ from, to, progress: 0, speed: 0.012 + Math.random() * 0.014, amber: Math.random() < 0.32, hops });
   }
 
   function draw(delta, animate) {
@@ -88,14 +88,16 @@
     }
 
     context.lineWidth = 0.7;
+    nodes.sort((a, b) => a.x - b.x);
     for (let i = 0; i < nodes.length; i++) {
       for (let j = i + 1; j < nodes.length; j++) {
         const a = nodes[i];
         const b = nodes[j];
+        if (b.x - a.x >= connectionDistance) break;
         const distance = Math.hypot(a.x - b.x, a.y - b.y);
         if (distance >= connectionDistance) continue;
         const alpha = (1 - distance / connectionDistance) * 0.42;
-        context.strokeStyle = `rgba(91, 77, 231, ${alpha})`;
+        context.strokeStyle = `rgba(109, 165, 137, ${alpha})`;
         context.beginPath();
         context.moveTo(a.x, a.y);
         context.lineTo(b.x, b.y);
@@ -103,7 +105,7 @@
       }
     }
     nodes.forEach(node => {
-      context.fillStyle = node.charge > 0.3 ? `rgba(30, 199, 239, ${0.5 + node.charge * 0.5})` : 'rgba(112, 95, 244, 0.65)';
+      context.fillStyle = node.charge > 0.3 ? `rgba(244, 194, 102, ${0.5 + node.charge * 0.5})` : 'rgba(139, 185, 162, 0.65)';
       const size = node.charge > 0.3 ? 3.2 : 2.1;
       context.fillRect(node.x - size / 2, node.y - size / 2, size, size);
     });
@@ -131,7 +133,7 @@
         const tail = Math.max(0, progress - 0.28);
         const x = pulse.from.x + (pulse.to.x - pulse.from.x) * progress;
         const y = pulse.from.y + (pulse.to.y - pulse.from.y) * progress;
-        const color = pulse.cyan ? '#06c9e8' : '#8473ff';
+        const color = pulse.amber ? '#d9a441' : '#79cd9f';
         context.lineWidth = 1.2;
         context.strokeStyle = color;
         context.beginPath();
