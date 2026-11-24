@@ -12,13 +12,13 @@ Open `http://127.0.0.1:4173`. Deploy the root directory through the existing sta
 
 ## Design and motion
 
-The design preserves Veluse's original metallic ribbon V and indigo/cyan identity, with near-black navy surfaces, flowing SVG gradients, clear typography, and a quieter editorial hierarchy. Every logo uses `favicon.png`; the source favicon is unchanged. The hero has no status dot, technical badge, or decorative system labels. All assets are local; no artwork, code, fonts, or dependencies are loaded from the visual reference site.
+The design preserves Veluse's original metallic ribbon V and indigo/cyan identity, with near-black navy surfaces, flowing SVG gradients, clear typography, and a quieter editorial hierarchy. Every logo uses the original `favicon.png` artwork; the source favicon is unchanged. The hero has no status dot, technical badge, or decorative system labels. All assets are local; no artwork, code, fonts, or dependencies are loaded from the visual reference site.
 
 - The original neural-network motif: 140 drifting desktop nodes (42 on mobile), proximity connections, firing pulses, brief node flashes, and pointer repulsion. Coordinates are neither stored nor transmitted.
 - Five growth phases in a vertical, native-scroll narrative inspired by the reference site's horizontal numbered panels. Each phase brings its own drawing, scanning, and construction graphics into view. There are no phase-selection buttons.
 - A pinned vertical rail on wide, tall screens; normal document flow on phones, short viewports, and with reduced motion. The page never intercepts wheel input or scrolls the browser programmatically.
 - Native SVG folds drift vertically in Veluse's darker indigo palette, with the original firing neural network retained underneath.
-- The first screen places the original logo in a gently floating obsidian and chrome sculpture, wrapped by indigo ribbons. Its motion obeys the same pause, hidden-tab, and reduced-motion controls.
+- The first screen uses the original emblem on an exploded illustration of the three service layers. Its short entrance respects pause and reduced motion.
 - Animated acquisition schematics and an explicitly illustrative OS workflow.
 - Progressive scroll reveals; content remains visible without JavaScript.
 - Motion pause/play control, reduced-motion preferences, and background pausing.

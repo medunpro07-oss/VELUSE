@@ -213,63 +213,8 @@ header, main, footer {
   isolation: isolate;
   overflow: hidden
 }
-.hero-grid {
-  display: grid;
-  align-items: center;
-  gap: 0;
-  position: relative
-}
-.hero-copy {
-  position: relative;
-  z-index: 3;
-  min-width: 0
-}
 .hero h1 {
   position: relative
-}
-.hero h1 span {
-  display: block;
-  white-space: nowrap
-}
-.hero-description {
-  gap: 20px;
-  align-items: flex-start
-}
-.hero-actions {
-  display: flex;
-  align-items: center
-}
-.brand-chamber {
-  position: relative;
-  justify-self: end;
-  margin-right: -18px
-}
-.brand-chamber::before {
-  content: '';
-  position: absolute;
-  inset: 17%;
-  background: radial-gradient(ellipse,#3427c033,transparent 70%);
-  filter: blur(20px)
-}
-.hero-logo {
-  position: absolute;
-  height: auto;
-  transform: translate(-50%,-50%);
-  object-fit: contain
-}
-.hero-bottom {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between
-}
-.scroll-cue {
-  display: flex;
-  align-items: center
-}
-.hero-bottom p {
-  line-height: 1.7;
-  letter-spacing: .015em
 }
 .motion-toggle {
   background: none;
@@ -742,17 +687,11 @@ form .button {
   }
 }
 @media(min-width:1600px) {
-  .hero-grid {
-    min-height: 700px
-  }
   .hero {
     min-height: 890px
   }
   .hero h1 {
     font-size: 125px
-  }
-  .brand-chamber {
-    width: 520px
   }
 }
 @media(max-width:1150px) {
@@ -763,26 +702,8 @@ form .button {
     gap: 25px;
     margin-right: 15px
   }
-  .hero-grid {
-    min-height: 570px
-  }
   .hero {
     min-height: 740px
-  }
-  .hero-copy {
-    z-index: 3
-  }
-  .brand-chamber {
-    margin-right: -25px;
-    width: 110%;
-    opacity: .9
-  }
-  .hero-actions .button {
-    gap: 22px;
-    padding-inline: 18px
-  }
-  .hero-description {
-    max-width: 350px
   }
   .section-heading {
     align-items: flex-start
@@ -895,29 +816,6 @@ form .button {
   .hero h1 {
     letter-spacing: -.065em
   }
-  .hero-description {
-    gap: 15px
-  }
-  .hero-actions {
-    flex-wrap: wrap
-  }
-  .hero-actions .button {
-    min-height: 49px;
-    gap: 25px
-  }
-  .brand-chamber {
-    justify-self: center;
-    transform: none
-  }
-  .hero-bottom {
-    flex-wrap: wrap
-  }
-  .hero-bottom p {
-    font-size: 8px
-  }
-  .scroll-cue {
-    gap: 10px
-  }
   .motion-toggle {
     padding-block: 10px
   }
@@ -1029,18 +927,6 @@ form .button {
   }
 }
 @media(max-width:380px) {
-  .hero-bottom {
-    gap: 15px
-  }
-  .hero-bottom p {
-    display: none
-  }
-  .hero-bottom .motion-toggle {
-    margin-left: auto
-  }
-  .hero h1 span:first-child {
-    font-size: 1.5em
-  }
   .wordmark {
     font-size: 18px;
     gap: 3px
@@ -1088,7 +974,7 @@ form .button {
     opacity: 1;
     transform: none
   }
-  .brand-chamber, .os-console {
+  .os-console {
     transform: none
   }
 }
@@ -1172,162 +1058,11 @@ form .button {
   min-height: calc(100svh - 90px);
   background: linear-gradient(90deg,#030409f5 8%,#030409db 43%,#03040980 80%),linear-gradient(0deg,#030409cc,transparent 60%)
 }
-.hero-grid {
-  min-height: calc(100svh - 180px);
-  grid-template-columns: 1.12fr 1fr;
-  padding-block: 80px 65px
-}
 .hero h1 {
   font-size: clamp(76px,8.2vw,122px);
   font-weight: 500;
   letter-spacing: -.065em;
   line-height: 1.02
-}
-.hero h1 span:first-child {
-  font-size: 1em;
-  color: #edf0f7
-}
-.hero h1 span:last-child {
-  color: #7b88e0;
-  margin-top: 0
-}
-.hero-description {
-  display: block;
-  max-width: 430px;
-  margin-top: 31px
-}
-.hero-description p {
-  font-size: 16px;
-  line-height: 1.8;
-  color: #adb3c9
-}
-.hero-actions {
-  gap: 30px;
-  margin-top: 33px
-}
-.hero-actions .button {
-  font-size: 13px;
-  padding: 19px 23px
-}
-.brand-chamber {
-  width: 100%;
-  height: 500px;
-  aspect-ratio: auto;
-  transform: none;
-  margin: 0;
-  isolation: auto
-}
-.brand-chamber::before {
-  display: none
-}
-.hero-logo {
-  left: 50%;
-  top: 50%;
-  width: 76%;
-  max-width: 85%;
-  filter: drop-shadow(4px 17px 12px #0009)
-}
-.brand-sculpture {
-  position: absolute;
-  width: 570px;
-  height: 570px;
-  left: 53%;
-  top: 49%;
-  transform: translate(-50%,-50%);
-  perspective: 1000px;
-  isolation: isolate
-}
-.sculpture-halo {
-  position: absolute;
-  inset: 4%;
-  border-radius: 50%;
-  background: radial-gradient(ellipse,#30357238,transparent 67%);
-  filter: blur(28px)
-}
-.sculpture-ribbon {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible
-}
-.sculpture-ribbon-back {
-  z-index: 1;
-  transform: rotate(-15deg);
-  animation: ribbon-drift 17s ease-in-out infinite alternate;
-  filter: drop-shadow(0 18px 20px #0009)
-}
-.brand-plinth {
-  position: absolute;
-  z-index: 2;
-  width: 305px;
-  height: 315px;
-  left: 50%;
-  top: 47%;
-  border-radius: 56px;
-  padding: 2px;
-  background: linear-gradient(145deg,#8b91a4 0%,#353a50 17%,#0a0c16 36%,#14182b 72%,#5b6482 91%,#161a2c);
-  box-shadow: 8px 13px 0 -2px #080a12,10px 15px 0 -2px #2e3349,15px 28px 45px #000b;
-  transform: translate(-50%,-50%) rotateX(11deg) rotateY(-20deg) rotateZ(-12deg);
-  animation: sculpture-float 12s ease-in-out infinite alternate
-}
-.plinth-face {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  border-radius: 54px;
-  background: radial-gradient(ellipse at 19% 0%,#24283980,transparent 60%),linear-gradient(140deg,#10121d,#06070c 53%,#12162b);
-  box-shadow: inset 0 0 0 1px #c1caf00a,inset 0 -20px 45px #05060cc9
-}
-.plinth-light {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(118deg,transparent 10%,#c7cfff08 25%,transparent 45%);
-  pointer-events: none
-}
-.sculpture-ribbon-front {
-  z-index: 3;
-  transform: rotate(-15deg);
-  animation: ribbon-drift 17s ease-in-out infinite alternate;
-  filter: drop-shadow(0 12px 9px #0006)
-}
-.sculpture-shadow {
-  position: absolute;
-  z-index: 0;
-  width: 60%;
-  height: 10%;
-  bottom: 1%;
-  left: 24%;
-  background: #000b;
-  border-radius: 50%;
-  filter: blur(15px);
-  transform: rotate(-12deg)
-}
-@keyframes sculpture-float {
-  to { transform: translate(-50%,-54%) rotateX(7deg) rotateY(-14deg) rotateZ(-9deg) }
-}
-@keyframes ribbon-drift {
-  to { transform: translateY(-9px) rotate(-10deg) }
-}
-.hero-bottom {
-  border-top: 1px solid #ffffff0b;
-  padding-block: 20px 28px
-}
-.scroll-cue {
-  font: 12px Arial,Helvetica,sans-serif;
-  letter-spacing: 0;
-  text-transform: none;
-  gap: 12px;
-  color: #aeb6cf
-}
-.scroll-cue>span {
-  color: #7685d7;
-  font-size: 17px
-}
-.hero-bottom p {
-  font-size: 11px;
-  color: #8e97b2
 }
 .motion-toggle {
   font: 11px Arial,Helvetica,sans-serif;
@@ -1858,26 +1593,8 @@ form .button {
   }
 }
 @media(max-width:1150px) {
-  .hero-grid {
-    grid-template-columns: 1.2fr 1fr;
-    gap: 10px
-  }
   .hero h1 {
     font-size: 8.3vw
-  }
-  .hero-description p {
-    font-size: 15px
-  }
-  .hero-actions {
-    gap: 24px;
-    flex-wrap: wrap
-  }
-  .hero-actions .button {
-    font-size: 12px;
-    padding: 17px 20px
-  }
-  .brand-sculpture {
-    transform: translate(-50%,-50%) scale(.83)
   }
   .section-heading {
     gap: 35px
@@ -1978,64 +1695,10 @@ form .button {
   .hero {
     min-height: auto
   }
-  .hero-grid {
-    grid-template-columns: 1fr;
-    min-height: auto;
-    padding-block: 59px 8px;
-    gap: 7px
-  }
   .hero h1 {
     font-size: clamp(50px,16vw,98px);
     line-height: 1.04;
     font-weight: 500
-  }
-  .hero h1 span:first-child {
-    font-size: 1em
-  }
-  .hero h1 span:last-child {
-    margin-top: 0;
-    color: #8997e4
-  }
-  .hero-description {
-    max-width: 380px;
-    margin-top: 24px
-  }
-  .hero-description p {
-    font-size: 14px;
-    line-height: 1.85
-  }
-  .hero-actions {
-    margin-top: 27px;
-    gap: 24px
-  }
-  .hero-actions .button {
-    font-size: 12px;
-    padding: 17px 18px
-  }
-  .hero-actions .text-link {
-    font-size: 11px;
-    gap: 12px
-  }
-  .brand-chamber {
-    height: 350px;
-    width: 100%;
-    margin: 34px 0 0;
-    opacity: 1
-  }
-  .brand-sculpture {
-    transform: translate(-50%,-50%) scale(.62);
-    left: 50%;
-    top: 50%
-  }
-  .hero-bottom {
-    padding-block: 20px 27px;
-    gap: 20px
-  }
-  .hero-bottom p {
-    display: none
-  }
-  .scroll-cue {
-    font-size: 11px
   }
   .motion-toggle {
     font-size: 10px;
@@ -2274,21 +1937,6 @@ form .button {
 @media(max-width:380px) {
   .hero h1 {
     font-size: 16vw
-  }
-  .hero-description p {
-    font-size: 13px
-  }
-  .hero-actions {
-    gap: 20px
-  }
-  .hero-actions .text-link {
-    font-size: 10px
-  }
-  .brand-sculpture {
-    transform: translate(-50%,-50%) scale(.56)
-  }
-  .brand-chamber {
-    height: 320px
   }
   .section-heading h2, .protocol .section-heading h2, .roadmap .section-heading h2 {
     font-size: 7.7vw
