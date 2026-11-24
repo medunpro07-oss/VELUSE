@@ -1,0 +1,20 @@
+[PRIVACY POLICY]
+v1.0.4-production
+
+1. TELEMETRY RECORDING
+All interaction coordinates (CURS_COORD_X/Y) are tracked live for matrix render optimization. No persistent personal identification is cached.
+
+2. COOKIE-LESS LOCAL STORAGE
+We utilize localized session states to store selected node preferences. No tracking pixels are broadcast to third-party ad brokers.
+
+3. HIPAA COMPLIANCE SHIELD
+All patient acquisition forms use end-to-end telemetry encryption. Real-time patient data is sanitized before entering optimization queues.
+
+4. USER INQUIRIES
+For administrative compliance issues, contact connect@veluseagency.com.
+
+5. DATA SECURITY & RETENTION
+We implement commercial-grade security protocols. Patient pipeline telemetry is kept in active caches for 90 days before cold storage archiving.
+
+6. AUDIT TRAILS
+System administrative actions are cryptographically logged to prevent tampering.
